@@ -128,6 +128,7 @@ const SignUpScreen = ({ navigation }) => {
           style={{
             width: "100%",
             height: 46,
+            
             alignItems: "center",
           }}
           onPress={() => {
