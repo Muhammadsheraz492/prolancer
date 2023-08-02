@@ -132,7 +132,7 @@ const SignUpScreen = ({ navigation }) => {
           }}
           onPress={() => {
             // API(); 
-            navigation.navigate("LoginScreen");
+            navigation.navigate("Tab");
           }}
         >
           <LoginBtn

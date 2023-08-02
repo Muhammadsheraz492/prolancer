@@ -153,7 +153,7 @@ const LoginScreen = ({ navigation }) => {
         </TouchableOpacity>
         <View
           style={{
-            height: "24%",
+            height: "10%",
           }}
         />
         <TouchableOpacity
