@@ -8,17 +8,21 @@ import {
 
   TouchableOpacity,
   Dimensions,
+  Modal,
+  ActivityIndicator,
 } from "react-native";
 
 import FormInput from "../Components/FormInput";
 import LoginBtn from "../Components/Loginbtn";
 import Entypo from "react-native-vector-icons/Entypo";
+import Loader from "./Loader";
 
 const SignUpScreen = ({ navigation }) => {
   const [email, setEmail] = React.useState();
   const [password, setPassword] = React.useState();
   const [username, setusername] = React.useState();
   const [phone, setphone] = React.useState();
+  const [loader,setloader]=useState(false);
 
 
 
@@ -115,6 +119,7 @@ const SignUpScreen = ({ navigation }) => {
           // value={text}
           labelValue={phone}
           // secureTextEntry={true}
+          // keyboardType=""
           placeholder="Mobile phone number with country code "
         />
 
@@ -131,8 +136,8 @@ const SignUpScreen = ({ navigation }) => {
             alignItems: "center",
           }}
           onPress={() => {
-            // API(); 
-            navigation.navigate("LoginScreen");
+setloader(true)
+
           }}
         >
           <LoginBtn
@@ -143,6 +148,13 @@ const SignUpScreen = ({ navigation }) => {
           />
         </TouchableOpacity>
       </View>
+      <Modal  visible={loader}  transparent>
+    <View  style={{flex:1,justifyContent:"center",alignItems:"center"}}>
+    <ActivityIndicator  size={"large"} color={"black"} />
+
+    </View>
+  </Modal>
+    
     </View>
   );
 };

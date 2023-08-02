@@ -13,6 +13,8 @@ import {
   TextInput,
   TouchableOpacity,
   Dimensions,
+  ActivityIndicator,
+  Modal,
 } from "react-native";
 
 import FormInput from "../Components/FormInput";
@@ -22,8 +24,7 @@ import LoginBtn from "../Components/Loginbtn";
 const LoginScreen = ({ navigation }) => {
   const [username, setuserName] = React.useState();
   const [password, setPassword] = React.useState();
-
-
+  const [loader,setloader]=useState(false);
 
 
   return (
@@ -180,6 +181,12 @@ const LoginScreen = ({ navigation }) => {
           }}
         />
       </View>
+      <Modal  visible={loader}  transparent>
+    <View  style={{flex:1,justifyContent:"center",alignItems:"center"}}>
+    <ActivityIndicator  size={"large"} color={"black"} />
+
+    </View>
+  </Modal>
     </View>
   );
 };
