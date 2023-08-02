@@ -16,7 +16,8 @@ import FormInput from "../Components/FormInput";
 import LoginBtn from "../Components/Loginbtn";
 import Entypo from "react-native-vector-icons/Entypo";
 import Loader from "./Loader";
-
+import { auth } from "../firebase/firebase";
+import {createUserWithEmailAndPassword} from 'firebase/auth'
 const SignUpScreen = ({ navigation }) => {
   const [email, setEmail] = React.useState();
   const [password, setPassword] = React.useState();
@@ -24,7 +25,21 @@ const SignUpScreen = ({ navigation }) => {
   const [phone, setphone] = React.useState();
   const [loader,setloader]=useState(false);
 
-
+const CreateUser=()=>{
+  createUserWithEmailAndPassword(auth, email, password)
+  .then((userCredential) => {
+    // Signed in 
+    const user = userCredential.user;
+    console.log(user);
+    // ...
+  })
+  .catch((error) => {
+    const errorCode = error.code;
+    const errorMessage = error.message;
+    // ..
+  });
+  
+}
 
   return (
     <View
@@ -81,7 +96,7 @@ const SignUpScreen = ({ navigation }) => {
           alignItems: "center",
           width: "100%",
         }}
-      >
+      >ß
         <FormInput
           // style={styles.input}
 
@@ -137,6 +152,7 @@ const SignUpScreen = ({ navigation }) => {
           }}
           onPress={() => {
 setloader(true)
+CreateUser();
 
           }}
         >
@@ -145,6 +161,7 @@ setloader(true)
             textcolor="#fff"
             textfontsize={23}
             name="Signup"
+
           />
         </TouchableOpacity>
       </View>
