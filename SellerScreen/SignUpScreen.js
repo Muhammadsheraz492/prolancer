@@ -121,7 +121,7 @@ const SignUpScreen = ({ navigation }) => {
         {/* </TouchableOpacity> */}
         <View
           style={{
-            height: "44%",
+            height: "24%",
           }}
         />
         <TouchableOpacity
@@ -133,7 +133,7 @@ const SignUpScreen = ({ navigation }) => {
           }}
           onPress={() => {
             // API(); 
-            navigation.navigate("Tab");
+            navigation.navigate("SelectSkill");
           }}
         >
           <LoginBtn

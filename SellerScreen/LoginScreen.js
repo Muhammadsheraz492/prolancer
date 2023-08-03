@@ -2,17 +2,12 @@
 import React, { useState } from "react";
 // import ax
 import {
-  SafeAreaView,
-  Image,
-  StyleSheet,
-  FlatList,
+  
   View,
   Text,
-  ImageBackground,
-  StatusBar,
-  TextInput,
+  
   TouchableOpacity,
-  Dimensions,
+ 
 } from "react-native";
 
 import FormInput from "../Components/FormInput";
