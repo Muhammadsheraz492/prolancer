@@ -13,6 +13,7 @@ import JobList from "./BuyerScreen/JobList";
 import Purposal from "./BuyerScreen/Purposal";
 import BuyerChat from "./BuyerScreen/BuyerChat";
 import More from "./BuyerScreen/More";
+import SelectSkill from "./SellerScreen/SelectSkill";
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 import Constants from 'expo-constants';
@@ -45,6 +46,13 @@ function App() {
             }}
             name="Tab"
             component={TabNavi}
+          />
+          <Stack.Screen
+            options={{
+              headerShown: false,
+            }}
+            name="SelectSkill"
+            component={SelectSkill}
           />
         </Stack.Navigator>
       </NavigationContainer>

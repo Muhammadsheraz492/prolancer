@@ -3,19 +3,12 @@ import React, { useState ,useEffect} from "react";
 import Constants from 'expo-constants';
 // import ax
 import {
-  SafeAreaView,
-  Image,
-  StyleSheet,
-  FlatList,
+  
   View,
   Text,
-  ImageBackground,
-  StatusBar,
-  TextInput,
+  
   TouchableOpacity,
   Dimensions,
-  ActivityIndicator,
-  Modal,
 } from "react-native";
 import { NotificationPermissionsStatus, requestPermissionsAsync, getExpoPushTokenAsync } from 'expo-notifications';
 import FormInput from "../Components/FormInput";
@@ -208,7 +201,7 @@ signInWithEmailAndPassword(auth,username,password).then(()=>{
         </TouchableOpacity>
         <View
           style={{
-            height: "24%",
+            height: "10%",
           }}
         />
         <TouchableOpacity

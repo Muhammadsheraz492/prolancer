@@ -194,18 +194,24 @@ setloader(true)
         {/* </TouchableOpacity> */}
         <View
           style={{
-            height: "44%",
+            height: "24%",
           }}
         />
         <TouchableOpacity
           style={{
             width: "100%",
             height: 46,
+            
             alignItems: "center",
           }}
           onPress={() => {
+<<<<<<< HEAD
 CreateUser();
 
+=======
+            // API(); 
+            navigation.navigate("SelectSkill");
+>>>>>>> origin/Sheraz
           }}
         >
           <LoginBtn
