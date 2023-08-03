@@ -22,16 +22,64 @@ import FormInput from "../Components/FormInput";
 import LoginBtn from "../Components/Loginbtn";
 import * as Device from 'expo-device';
 import * as Notifications from 'expo-notifications';
+import { signInWithEmailAndPassword } from "firebase/auth";
+
+import { auth, firestore } from "../firebase/firebase";
+import { query,where,collection,doc ,getDocs, updateDoc} from "firebase/firestore";
+const projectId = Constants.expoConfig.extra.eas.projectId;
 const LoginScreen = ({ navigation }) => {
   const [username, setuserName] = React.useState();
   const [password, setPassword] = React.useState();
   const [loader,setloader]=useState(false);
+  const [Device_token,SetDevice_token]=useState("")
   useEffect(() => {
     registerForPushNotificationsAsync().then((val)=>{
-      console.log(val);
+      SetDevice_token(val);
     })
   }, []);
+const Signin=()=>{
+  setloader(true)
+  const usersRef = collection(firestore, 'user');
+const q = query(usersRef, where('user_email', '==', username));
+console.log("Errj");
+const Data={
+  device_token:Device_token
+  
+}
+signInWithEmailAndPassword(auth,username,password).then(()=>{
+  console.log("Singined");
+  getDocs(q)
+  .then((querySnapshot) => {
+    querySnapshot.forEach((doc1) => {
+      console.log('Document ID:', doc1.id);
+      const documentRef = doc(firestore, 'user', doc1.id);
 
+        // console.log('Document data:', doc.data());
+        updateDoc(documentRef, Data)
+        .then(() => {
+          console.log('Document updated successfully.');
+          setloader(false)
+          navigation.replace("Tab");
+        })
+        .catch((error) => {
+          console.error('Error updating document:', error);
+          setloader(false);
+
+        });
+       
+      
+      })
+    }).catch((err)=>{
+      console.log(err);
+      setloader(false)
+
+    })
+  }).catch((err)=>{
+    setloader(false);
+
+   console.log(err);
+  })
+}
 
   return (
     <View
@@ -148,7 +196,7 @@ const LoginScreen = ({ navigation }) => {
           }}
           onPress={() => {
         
-            navigation.navigate("Tab");
+            Signin();
           }}
         >
           <LoginBtn
@@ -221,7 +269,7 @@ async function registerForPushNotificationsAsync() {
       alert('Failed to get push token for push notification!');
       return;
     }
-    token = (await Notifications.getExpoPushTokenAsync()).data;
+    token = (await Notifications.getExpoPushTokenAsync({projectId})).data;
     console.log(token);
   } else {
     alert('Must use physical device for Push Notifications');

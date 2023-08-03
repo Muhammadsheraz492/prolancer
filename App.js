@@ -15,6 +15,10 @@ import BuyerChat from "./BuyerScreen/BuyerChat";
 import More from "./BuyerScreen/More";
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
+import Constants from 'expo-constants';
+
+
+// console.log('Project ID:', projectId);
 
 function App() {
   return (
