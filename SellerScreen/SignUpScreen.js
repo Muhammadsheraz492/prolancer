@@ -19,7 +19,7 @@ import Loader from "./Loader";
 import { auth, firestore } from "../firebase/firebase";
 import {createUserWithEmailAndPassword} from 'firebase/auth'
 import { v4 as uuidv4 } from 'uuid';
-import { collection, doc, setDoc } from "firebase/firestore";
+import { collection, doc, setDoc ,} from "firebase/firestore";
 import { useNavigation } from "@react-navigation/native";
 const SignUpScreen = () => {
   let navigation=useNavigation();
@@ -194,24 +194,18 @@ setloader(true)
         {/* </TouchableOpacity> */}
         <View
           style={{
-            height: "24%",
+            height: "44%",
           }}
         />
         <TouchableOpacity
           style={{
             width: "100%",
             height: 46,
-            
             alignItems: "center",
           }}
           onPress={() => {
-<<<<<<< HEAD
 CreateUser();
 
-=======
-            // API(); 
-            navigation.navigate("SelectSkill");
->>>>>>> origin/Sheraz
           }}
         >
           <LoginBtn

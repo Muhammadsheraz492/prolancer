@@ -8,6 +8,8 @@ import {
   Text,
   
   TouchableOpacity,
+  Modal,
+  ActivityIndicator,
   Dimensions,
 } from "react-native";
 import { NotificationPermissionsStatus, requestPermissionsAsync, getExpoPushTokenAsync } from 'expo-notifications';
