@@ -11,31 +11,84 @@ import {
   Modal,
   ActivityIndicator,
 } from "react-native";
-
+import * as Random from 'expo-random';
 import FormInput from "../Components/FormInput";
 import LoginBtn from "../Components/Loginbtn";
 import Entypo from "react-native-vector-icons/Entypo";
 import Loader from "./Loader";
-import { auth } from "../firebase/firebase";
+import { auth, firestore } from "../firebase/firebase";
 import {createUserWithEmailAndPassword} from 'firebase/auth'
-const SignUpScreen = ({ navigation }) => {
+import { v4 as uuidv4 } from 'uuid';
+import { collection, doc, setDoc } from "firebase/firestore";
+import { useNavigation } from "@react-navigation/native";
+const SignUpScreen = () => {
+  let navigation=useNavigation();
   const [email, setEmail] = React.useState();
   const [password, setPassword] = React.useState();
   const [username, setusername] = React.useState();
   const [phone, setphone] = React.useState();
   const [loader,setloader]=useState(false);
+  const collectionRef = collection(firestore, 'user');
+
+  const doc_id = () => {
+
+    const S4 = () => {
+      return (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1);
+    };
+  
+    return (
+      S4() +
+      S4() +
+      "-" +
+      S4() +
+      "-" +
+      S4() +
+      "-" +
+      S4() +
+      "-" +
+      S4() +
+      S4() +
+      S4()
+    );
+  }
+  
 
 const CreateUser=()=>{
+  const newUUID = doc_id();
+  const UserDocumentRef=doc(collectionRef,newUUID);
+  console.log(newUUID);
+setloader(true)
+  const newUser={
+    user_id:newUUID,
+    user_name:username,
+    user_email:email,
+    user_phone:phone
+    
+  }
   createUserWithEmailAndPassword(auth, email, password)
   .then((userCredential) => {
-    // Signed in 
-    const user = userCredential.user;
-    console.log(user);
-    // ...
+    setDoc(UserDocumentRef, newUser)
+    .then((docRef) => {
+      // console.log('Document written with ID:', newUUID);
+
+      setloader(false)
+      navigation.goBack();  
   })
+    .catch((error) => {
+      alert('Error adding document:', error);
+      // setloader(false)
+
+    });
+
+   
+})
   .catch((error) => {
     const errorCode = error.code;
     const errorMessage = error.message;
+    console.log(error.message);
+    setloader(false)
+
+
     // ..
   });
   
@@ -96,7 +149,7 @@ const CreateUser=()=>{
           alignItems: "center",
           width: "100%",
         }}
-      >ß
+      >
         <FormInput
           // style={styles.input}
 
@@ -151,7 +204,6 @@ const CreateUser=()=>{
             alignItems: "center",
           }}
           onPress={() => {
-setloader(true)
 CreateUser();
 
           }}
