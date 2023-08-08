@@ -20,7 +20,7 @@ export default function Support({navigation}) {
     <View
           style={{
             width: "95%",
-            height: 30,
+            height: 25,
             marginTop:20
           }}
         >

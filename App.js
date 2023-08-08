@@ -2,7 +2,7 @@
 
 import * as React from "react";
 import { NavigationContainer } from "@react-navigation/native";
-
+import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -21,6 +21,7 @@ import FQ from "./BuyerScreen/FQ";
 import About from "./BuyerScreen/About";
 import Support from "./BuyerScreen/Support";
 import BidDetail from "./BuyerScreen/BidDetail";
+import Dashboard from "./BuyerScreen/Dashboard";
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
@@ -106,6 +107,13 @@ function App() {
             name="BidDetail"
             component={BidDetail}
           />
+           <Stack.Screen
+            options={{
+              headerShown: false,
+            }}
+            name="Dashboard"
+            component={Dashboard}
+          />
         </Stack.Navigator>
       </NavigationContainer>
     </SafeAreaView>
@@ -116,15 +124,63 @@ function App() {
 const TabNavi = () => {
   return (
     <Tab.Navigator
-    screenOptions={{headerShown: false}}
-    initialRouteName="JobList"
+      screenOptions={{ headerShown: false }}
+      initialRouteName="JobList"
     >
-      <Tab.Screen name="JobList" component={JobList} />
-      <Tab.Screen name="Purposal" component={Purposal} />
-      <Tab.Screen name="BuyerChat" component={BuyerChat} />
-      <Tab.Screen name="More" component={More} />
-     
+      <Tab.Screen
+        name="JobList"
+        component={JobList}
+        options={{
+          tabBarIcon: ({ focused, color, size }) => (
+            <Ionicons
+              name={focused ? 'search' : 'search-outline'}
+              size={size}
+              color={color}
+            />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="Purposal"
+        component={Purposal}
+        options={{
+          tabBarIcon: ({ focused, color, size }) => (
+            <Ionicons
+              name={focused ? 'ios-paper-plane' : 'ios-paper-plane-outline'}
+              size={size}
+              color={color}
+            />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="BuyerChat"
+        component={BuyerChat}
+        options={{
+          tabBarIcon: ({ focused, color, size }) => (
+            <MaterialCommunityIcons
+              name={focused ? 'chat' : 'chat-outline'}
+              size={size}
+              color={color}
+            />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="More"
+        component={More}
+        options={{
+          tabBarIcon: ({ focused, color, size }) => (
+            <Ionicons
+              name={focused ? 'list' : 'list-outline'}
+              size={size}
+              color={color}
+            />
+          ),
+        }}
+      />
     </Tab.Navigator>
   );
 };
+
 export default App;
