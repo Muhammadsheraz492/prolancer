@@ -40,6 +40,13 @@ function App() {
             name="SignUpScreen"
             component={SignUpScreen}
           />
+            <Stack.Screen
+            options={{
+              headerShown: false,
+            }}
+            name="SelectSkill"
+            component={SelectSkill}
+          />
            <Stack.Screen
             options={{
               headerShown: false,
@@ -47,13 +54,7 @@ function App() {
             name="Tab"
             component={TabNavi}
           />
-          <Stack.Screen
-            options={{
-              headerShown: false,
-            }}
-            name="SelectSkill"
-            component={SelectSkill}
-          />
+        
         </Stack.Navigator>
       </NavigationContainer>
     </SafeAreaView>

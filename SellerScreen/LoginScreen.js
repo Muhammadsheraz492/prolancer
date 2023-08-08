@@ -32,49 +32,60 @@ const LoginScreen = ({ navigation }) => {
       SetDevice_token(val);
     })
   }, []);
-const Signin=()=>{
-  setloader(true)
-  const usersRef = collection(firestore, 'user');
-const q = query(usersRef, where('user_email', '==', username));
-console.log("Errj");
-const Data={
-  device_token:Device_token
-  
-}
-signInWithEmailAndPassword(auth,username,password).then(()=>{
-  console.log("Singined");
-  getDocs(q)
-  .then((querySnapshot) => {
-    querySnapshot.forEach((doc1) => {
-      console.log('Document ID:', doc1.id);
-      const documentRef = doc(firestore, 'user', doc1.id);
+  const Signin = () => {
+    setloader(true);
 
-        // console.log('Document data:', doc.data());
-        updateDoc(documentRef, Data)
-        .then(() => {
-          console.log('Document updated successfully.');
-          setloader(false)
-          navigation.replace("Tab");
-        })
-        .catch((error) => {
-          console.error('Error updating document:', error);
+    signInWithEmailAndPassword(auth, username, password)
+      .then(() => {
+        console.log("Signed in");
+        const usersRef = collection(firestore, "user");
+        const q = query(usersRef, where("user_email", "==", username));
+        const Data = {
+          device_token: Device_token,
+        };
+
+        try {
+          getDocs(q)
+            .then((querySnapshot) => {
+              const doc_ids = [];
+
+              querySnapshot.forEach((doc1) => {
+                console.log("Document ID:", doc1.id);
+                const documentRef = doc(firestore, "user", doc1.id);
+
+                try {
+                  updateDoc(documentRef, Data)
+                    .then(() => {
+                      console.log("Document updated successfully.");
+                      doc_ids.push(doc1.id);
+                    })
+                    .catch((error) => {
+                      console.error("Error updating document:", error);
+                    });
+                } catch (error) {
+                  console.error("Error updating document:", error);
+                }
+              });
+
+              // After all documents are updated, navigate to the "SelectSkill" screen
+              navigation.replace("SelectSkill", {
+                doc_ids: doc_ids, // Pass the array of doc_ids
+              });
+            })
+            .catch((err) => {
+              console.log("Get Doc", err);
+              setloader(false);
+            });
+        } catch (error) {
+          console.error("Get Doc", error);
           setloader(false);
-
-        });
-       
-      
+        }
       })
-    }).catch((err)=>{
-      console.log(err);
-      setloader(false)
-
-    })
-  }).catch((err)=>{
-    setloader(false);
-
-   console.log(err);
-  })
-}
+      .catch((err) => {
+        setloader(false);
+        console.log(err);
+      });
+  };
 
   return (
     <View

@@ -3,12 +3,15 @@ import { ActivityIndicator,TouchableOpacity, FlatList, StyleSheet, Text, View } 
 import { SelectList } from 'react-native-dropdown-select-list';
 import Entypo from "react-native-vector-icons/Entypo";
 import LoginBtn from "../Components/Loginbtn";
+import { useRoute } from '@react-navigation/native';
 
 
 export default function SelectSkill() {
  
   const [textValue, setTextValue] = useState('');
-  
+  let Route=useRoute()
+  const {doc_id}=Route.params;
+  console.log("Upgrade ",doc_ids);
   const [Skilled,SetSkilled]=useState([])
   const data = [
     { key: '1', value: 'React' },
