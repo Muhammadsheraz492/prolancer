@@ -14,6 +14,13 @@ import Purposal from "./BuyerScreen/Purposal";
 import BuyerChat from "./BuyerScreen/BuyerChat";
 import More from "./BuyerScreen/More";
 import SelectSkill from "./SellerScreen/SelectSkill";
+import PostProject from "./BuyerScreen/PostProject";
+import Notifications from "./BuyerScreen/Notifications";
+import Bids from "./BuyerScreen/Bids";
+import FQ from "./BuyerScreen/FQ";
+import About from "./BuyerScreen/About";
+import Support from "./BuyerScreen/Support";
+import BidDetail from "./BuyerScreen/BidDetail";
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
@@ -49,6 +56,55 @@ function App() {
             }}
             name="SelectSkill"
             component={SelectSkill}
+          />
+          <Stack.Screen
+            options={{
+              headerShown: false,
+            }}
+            name="PostProject"
+            component={PostProject}
+          />
+           <Stack.Screen
+            options={{
+              headerShown: false,
+            }}
+            name="Notifications"
+            component={Notifications}
+          />
+            <Stack.Screen
+            options={{
+              headerShown: false,
+            }}
+            name="Bids"
+            component={Bids}
+          />
+            <Stack.Screen
+            options={{
+              headerShown: false,
+            }}
+            name="FQ"
+            component={FQ}
+          />
+            <Stack.Screen
+            options={{
+              headerShown: false,
+            }}
+            name="About"
+            component={About}
+          />
+           <Stack.Screen
+            options={{
+              headerShown: false,
+            }}
+            name="Support"
+            component={Support}
+          />
+            <Stack.Screen
+            options={{
+              headerShown: false,
+            }}
+            name="BidDetail"
+            component={BidDetail}
           />
         </Stack.Navigator>
       </NavigationContainer>

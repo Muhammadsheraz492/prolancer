@@ -5,7 +5,7 @@ import Entypo from "react-native-vector-icons/Entypo";
 import LoginBtn from "../Components/Loginbtn";
 
 
-export default function SelectSkill() {
+export default function SelectSkill({navigation}) {
  
   const [textValue, setTextValue] = useState('');
   

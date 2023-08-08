@@ -1,27 +1,10 @@
 
-import { View, Text , TextInput,StyleSheet , FlatList} from 'react-native'
+import { View, Text , TextInput,StyleSheet , FlatList, TouchableOpacity} from 'react-native'
 import React from 'react'
+import Entypo from "react-native-vector-icons/Entypo";
 
-export default function Purposal() {
-  const [search, setsearch] = React.useState();
-  const [data, setdata] = React.useState([]);
-  const [originalData, setoriginalData] = React.useState([]);
-  const searchFilter = text => {
-    if (text) {
-      const newdata = originalData.filter(item => {
-        const itemdata = item.bas_route
-          ? item.bas_route.toUpperCase()
-          : ''.toUpperCase();
-        const textData = text.toUpperCase();
-        return itemdata.indexOf(textData) > -1;
-      });
-      setdata(newdata);
-      setsearch(text);
-    } else {
-      setdata(originalData);
-      setsearch(text);
-    }
-  };
+export default function Bids({navigation}) {
+
   const Jobs = [
     {
       JobDetail: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.',
@@ -88,6 +71,19 @@ export default function Purposal() {
       backgroundColor: "white",
     }}
   >
+     <View
+          style={{
+            width: "95%",
+            height: 30,
+            marginTop:20
+          }}
+        >
+                    
+      
+          <TouchableOpacity onPress={() => navigation.goBack()}>
+            <Entypo name="chevron-thin-left" size={30} />
+          </TouchableOpacity>
+        </View>
  <View
           style={{
             height: "6%",
@@ -103,39 +99,9 @@ export default function Purposal() {
     }}
     >
 
-Purposal Lists
+Bids
     </Text>
-    <View
-        style={{
-          width: '90%',
-          alignSelf: 'center',
-          marginTop: 20,
-          justifyContent: 'space-between',
-          flexDirection: 'row',
-        }}>
-        <View
-          style={{
-            width: '100%',
-            height: 44,
-            backgroundColor: '#EEEEEE',
-            borderRadius: 8,
-            padding: 10,
-            flexDirection: 'row',
-            alignItems: 'center',
-          }}>
-        
-          <TextInput
-            style={styles.input}
-            onChangeText={text => searchFilter(text)}
-            placeholderTextColor="#969696"
-            value={search}
-            placeholder="Search Purposal"
-            autocorrect={false}
-            autoCapitalize="none"
-          />
-        </View>
-        
-      </View>
+  
       <View
         style={{
           width: '90%',
@@ -147,6 +113,16 @@ Purposal Lists
           data={Jobs}
           showsVerticalScrollIndicator={false}
           renderItem={({item}) => (
+           <TouchableOpacity
+           onPress={() => navigation.navigate("BidDetail",{
+
+           JobDetail:item.JobDetail ,
+           Username:item.Username ,
+           Skill:item.Skills
+
+           })}
+           >
+
             <View
               style={{
                 width: '100%',
@@ -189,6 +165,8 @@ Purposal Lists
                     {item.Skills}
                   </Text>
             </View>
+           </TouchableOpacity> 
+
           )}
         />
       </View>
