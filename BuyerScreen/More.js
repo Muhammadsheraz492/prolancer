@@ -13,7 +13,7 @@ export default function More({navigation}) {
     }}
   >
  <View style={{
- height: "6%",
+ height: "3%",
           }}
         />
  <View
@@ -22,11 +22,7 @@ export default function More({navigation}) {
             alignSelf: 'center',
             // marginLeft:20
           }}>
-          <View
-            style={{
-              height: 10,
-            }}
-          />
+        
            <TouchableOpacity onPress={() => navigation.goBack()}>
             <Entypo name="chevron-thin-left" size={30} />
           </TouchableOpacity>

@@ -21,7 +21,11 @@ import FQ from "./BuyerScreen/FQ";
 import About from "./BuyerScreen/About";
 import Support from "./BuyerScreen/Support";
 import BidDetail from "./BuyerScreen/BidDetail";
-import Dashboard from "./BuyerScreen/Dashboard";
+import Tasklist from "./BuyerScreen/Tasklist";
+import FileUpload from "./BuyerScreen/FileUpload";
+import Chat from "./BuyerScreen/Chat";
+import TaskDetail from "./BuyerScreen/TaskDetail";
+import JobDetail from "./BuyerScreen/JobDetail";
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
@@ -107,12 +111,41 @@ function App() {
             name="BidDetail"
             component={BidDetail}
           />
+           
+          <Stack.Screen
+            options={{
+              headerShown: false,
+            }}
+            name="Tasklist"
+            component={Tasklist}
+          />
+          <Stack.Screen
+            options={{
+              headerShown: false,
+            }}
+            name="FileUpload"
+            component={FileUpload}
+          />
+          <Stack.Screen
+            options={{
+              headerShown: false,
+            }}
+            name="Chat"
+            component={Chat}
+          />
            <Stack.Screen
             options={{
               headerShown: false,
             }}
-            name="Dashboard"
-            component={Dashboard}
+            name="TaskDetail"
+            component={TaskDetail}
+          />
+           <Stack.Screen
+            options={{
+              headerShown: false,
+            }}
+            name="JobDetail"
+            component={JobDetail}
           />
         </Stack.Navigator>
       </NavigationContainer>

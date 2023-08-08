@@ -1,7 +1,7 @@
-import { View, Text , TextInput,StyleSheet , FlatList} from 'react-native'
+import { View, Text , TextInput,StyleSheet , FlatList, TouchableOpacity} from 'react-native'
 import React from 'react'
 
-export default function JobList() {
+export default function JobList({navigation}) {
   const [search, setsearch] = React.useState();
   const [data, setdata] = React.useState([]);
   const [originalData, setoriginalData] = React.useState([]);
@@ -22,11 +22,6 @@ export default function JobList() {
       setsearch(text);
     }
   };
-  // const extractFirst20Words = (sentence) => {
-  //   const words = sentence.split(' ');
-  //   return words.slice(0, 20).join(' ');
-  // };
-  // const dataWithFirst20Words = Jobs.map((sentence) => extractFirst20Words(sentence));
 
   const Jobs = [
     {
@@ -154,6 +149,16 @@ export default function JobList() {
           keyExtractor={(item, index) => index.toString()}
           showsVerticalScrollIndicator={false}
           renderItem={({item}) => (
+            <TouchableOpacity
+            onPress={() => navigation.navigate("JobDetail",{
+
+JobDeta:item.JobDetail ,
+Username:item.Username ,
+Skill:item.Skills
+
+})}
+            >
+
             <View
               style={{
                 width: '100%',
@@ -200,6 +205,8 @@ export default function JobList() {
                  
             
             </View>
+            </TouchableOpacity>
+
           )}
         />
       </View>

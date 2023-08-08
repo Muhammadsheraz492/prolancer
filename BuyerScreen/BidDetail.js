@@ -1,9 +1,14 @@
+import React, { useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
-import React from 'react';
 import Entypo from 'react-native-vector-icons/Entypo';
 
 export default function BidDetail({ route, navigation }) {
   const { JobDetail, Username, Skill } = route.params;
+  const [selectedStatus, setSelectedStatus] = useState(null);
+
+  const handleButtonPress = (status) => {
+    setSelectedStatus(status);
+  };
 
   return (
     <ScrollView
@@ -18,10 +23,9 @@ export default function BidDetail({ route, navigation }) {
           <Entypo name="chevron-thin-left" size={30} />
         </TouchableOpacity>
       </View>
-      <View style={{ height: 30 }} />
 
       <View style={{ width: '90%', alignSelf: 'center' }}>
-        <Text style={styles.heading}>Job Detail</Text>
+        <Text style={styles.heading}>Bid Detail</Text>
         <View style={{ height: 30 }} />
 
         <Text style={styles.subText}>{Username}</Text>
@@ -40,13 +44,55 @@ export default function BidDetail({ route, navigation }) {
           </Text>
         </View>
 
-        <TouchableOpacity style={styles.dashboardButton} onPress={() => navigation.navigate('Dashboard')}>
-          <Text style={styles.dashboardButtonText}>Dashboard</Text>
-        </TouchableOpacity>
+        {!selectedStatus && (
+          <View>
+            <TouchableOpacity
+              style={styles.dashboardButton}
+              onPress={() => handleButtonPress('Approved')}
+            >
+              <Text style={styles.dashboardButtonText}>Approved</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.dashboardButton3}
+              onPress={() => handleButtonPress('Rejected')}
+            >
+              <Text style={styles.dashboardButtonText}>Rejected</Text>
+            </TouchableOpacity>
+          </View>
+        )}
+
+        {selectedStatus === 'Approved' && (
+          <TouchableOpacity
+            style={styles.dashboardButton}
+            onPress={() => navigation.navigate('Tasklist')}
+          >
+            <Text style={styles.dashboardButtonText}>Dashboard</Text>
+          </TouchableOpacity>
+        )}
+
+        {selectedStatus === 'Rejected' && (
+          <TouchableOpacity
+          disabled
+            style={styles.dashboardButtondisable}
+            onPress={() => handleButtonPress('Cancelled')}
+          >
+            <Text style={styles.dashboardButtonText}>Cancelled</Text>
+          </TouchableOpacity>
+        )}
+
+        {selectedStatus === 'Cancelled' && (
+          <TouchableOpacity
+            style={styles.dashboardButton}
+            onPress={() => navigation.navigate('Tasklist')}
+          >
+            <Text style={styles.dashboardButtonText}>Dashboard</Text>
+          </TouchableOpacity>
+        )}
       </View>
     </ScrollView>
   );
 }
+
 
 const styles = StyleSheet.create({
   heading: {
@@ -63,6 +109,28 @@ const styles = StyleSheet.create({
     fontSize: 16,
     alignSelf: 'center',
     color: '#000000',
+  },
+  dashboardButton3: {
+    backgroundColor: '#FF0000',
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+    borderRadius: 5,
+    alignSelf: 'center',
+    alignItems:"center",
+    width:"50%",
+    marginTop: 20,
+    marginBottom:20
+  },
+  dashboardButtondisable: {
+    backgroundColor: 'lightgrey',
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+    borderRadius: 5,
+    alignSelf: 'center',
+    alignItems:"center",
+    width:"50%",
+    marginTop: 20,
+    marginBottom:20
   },
   skill: {
     fontSize: 16,
@@ -85,7 +153,9 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     paddingVertical: 10,
     borderRadius: 5,
-    // alignSelf: 'center',
+    alignSelf: 'center',
+    alignItems:"center",
+
     width:"50%",
     marginTop: 20,
     marginBottom:20

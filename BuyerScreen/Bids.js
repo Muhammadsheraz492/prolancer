@@ -84,11 +84,7 @@ export default function Bids({navigation}) {
             <Entypo name="chevron-thin-left" size={30} />
           </TouchableOpacity>
         </View>
- <View
-          style={{
-            height: "6%",
-          }}
-        />
+
     <Text
     style=
     {{
