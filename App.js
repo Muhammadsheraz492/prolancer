@@ -8,7 +8,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { SafeAreaView } from "react-native-safe-area-context";
 import LoginScreen from "./SellerScreen/LoginScreen";
 import SignUpScreen from "./SellerScreen/SignUpScreen";
-
+import * as Notifications from 'expo-notifications';
 import JobList from "./BuyerScreen/JobList";
 import Purposal from "./BuyerScreen/Purposal";
 import BuyerChat from "./BuyerScreen/BuyerChat";
@@ -17,12 +17,38 @@ import SelectSkill from "./SellerScreen/SelectSkill";
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 import Constants from 'expo-constants';
+import PostProject from "./BuyerScreen/PortProject";
+import { Provider } from "react-redux";
+import { store } from "./Redux/store";
+import JobDetail from "./BuyerScreen/JobDetails";
 
 
 // console.log('Project ID:', projectId);
-
+Notifications.setNotificationHandler({
+  handleNotification: async () => ({
+    shouldShowAlert: true,
+    shouldPlaySound: false,
+    shouldSetBadge: false,
+  }),
+});
 function App() {
+  React.useEffect(() => {
+    // Add this inside your useEffect
+    const subscription = Notifications.addNotificationResponseReceivedListener(response => {
+      // Handle notification response (e.g., navigate to a specific screen)
+      console.log(response);
+    });
+  
+    return () => subscription.remove();
+  }, []);
+  
   return (
+    <Provider  
+    store={store}
+
+    >
+
+   
     <SafeAreaView style={{ flex: 1 }}>
       <NavigationContainer>
         <Stack.Navigator>
@@ -54,9 +80,24 @@ function App() {
             name="SelectSkill"
             component={SelectSkill}
           />
+             <Stack.Screen
+            options={{
+              headerShown: false,
+            }}
+            name="PostProject"
+            component={PostProject}
+          />
+              <Stack.Screen
+            options={{
+              headerShown: false,
+            }}
+            name="JobDetail"
+            component={JobDetail}
+          />
         </Stack.Navigator>
       </NavigationContainer>
     </SafeAreaView>
+    </Provider>
   );
 }
 

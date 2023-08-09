@@ -21,8 +21,11 @@ import { signInWithEmailAndPassword } from "firebase/auth";
 
 import { auth, firestore } from "../firebase/firebase";
 import { query,where,collection,doc ,getDocs, updateDoc} from "firebase/firestore";
+import { changeemail, changeuserid, changeuserusername } from "../Redux/counterSlice";
+import { useDispatch } from "react-redux";
 const projectId = Constants.expoConfig.extra.eas.projectId;
 const LoginScreen = ({ navigation }) => {
+  let dispatch=useDispatch();
   const [username, setuserName] = React.useState();
   const [password, setPassword] = React.useState();
   const [loader,setloader]=useState(false);
@@ -48,7 +51,10 @@ signInWithEmailAndPassword(auth,username,password).then(()=>{
     querySnapshot.forEach((doc1) => {
       console.log('Document ID:', doc1.id);
       const documentRef = doc(firestore, 'user', doc1.id);
-
+        // console.log();
+        dispatch(changeuserusername(doc1.data()['user_name']))
+         dispatch(changeemail(username))
+         dispatch(changeuserid(doc1.id))
         // console.log('Document data:', doc.data());
         updateDoc(documentRef, Data)
         .then(() => {

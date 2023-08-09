@@ -1,24 +1,30 @@
-import { View, Text , TextInput,StyleSheet , FlatList} from 'react-native'
-import React from 'react'
+import { View, Text , TextInput,StyleSheet , FlatList, TouchableOpacity} from 'react-native'
+import React, { useEffect, useState } from 'react'
+import { collection, getDocs } from 'firebase/firestore';
+import { firestore } from '../firebase/firebase';
+import { useNavigation } from '@react-navigation/native';
 
 export default function JobList() {
   const [search, setsearch] = React.useState();
+   const [allData,setallData]=useState([])
   const [data, setdata] = React.useState([]);
   const [originalData, setoriginalData] = React.useState([]);
-  
+  let navigation=useNavigation();
   const searchFilter = text => {
+    console.log(text);
     if (text) {
-      const newdata = originalData.filter(item => {
-        const itemdata = item.bas_route
-          ? item.bas_route.toUpperCase()
+      const newdata = Jobs.filter(item => {
+        const itemdata = item.description
+          ? item.description.toUpperCase()
           : ''.toUpperCase();
         const textData = text.toUpperCase();
         return itemdata.indexOf(textData) > -1;
       });
-      setdata(newdata);
+      SetJobs(newdata);
       setsearch(text);
     } else {
-      setdata(originalData);
+      SetJobs(allData);
+      console.log(allData);
       setsearch(text);
     }
   };
@@ -28,53 +34,29 @@ export default function JobList() {
   // };
   // const dataWithFirst20Words = Jobs.map((sentence) => extractFirst20Words(sentence));
 
-  const Jobs = [
-    {
-      JobDetail: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.',
-      Username: 'Username',
-      
-    },
-    {
-      JobDetail: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.',
-  
-      Username: 'Username',
-  
-    },
-    {
-      JobDetail: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.',
-      Username: 'Username',
-      
-    },
-    {
-      JobDetail: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.',
-  
-      Username: 'Username',
-  
-    },
-    {
-      JobDetail: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.',
-      Username: 'Username',
-      
-    },
-    {
-      JobDetail: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.',
-  
-      Username: 'Username',
-  
-    },
-    {
-      JobDetail: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.',
-      Username: 'Username',
-      
-    },
-    {
-      JobDetail: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.',
-  
-      Username: 'Username',
-  
-    },
-  
-  ];
+  // const Jobs = [];
+  const [Jobs,SetJobs]=useState([])
+  useEffect(()=>{
+   navigation.addListener("focus",()=>{
+    GetAllDocs();
+   })
+  },[])
+  const GetAllDocs=()=>{
+   
+      getDocs( collection(firestore, 'projects')).then((querySnapshot)=>{
+        let temparray=[];
+        
+        querySnapshot.forEach((doc1) => {
+
+         temparray.push(doc1.data())
+        })
+        
+        SetJobs(temparray)
+        setallData(temparray)
+      }).catch((err)=>{
+        console.log(err);
+      })
+  }
   return (
     <View
     style={{
@@ -143,6 +125,16 @@ export default function JobList() {
           keyExtractor={(item, index) => index.toString()}
           showsVerticalScrollIndicator={false}
           renderItem={({item}) => (
+            <TouchableOpacity
+            onPress={() => navigation.navigate("JobDetail",{
+
+JobDeta:item.description ,
+Username:item.user_name ,
+Skill:["React"],
+project_id:item.doc_id
+
+})}
+            >
             <View
               style={{
                 width: '100%',
@@ -163,7 +155,7 @@ export default function JobList() {
                     color: '#000000',
                     // fontWeight: 'bold',
                   }}>
-                  {item.JobDetail}
+                  {item.description}
                 </Text>
               
                   <Text
@@ -173,13 +165,14 @@ export default function JobList() {
                       color: '#5B5B5B',
                       // fontWeight:"bold"
                     }}>
-                    {item.Username}
+                    {item.user_name}
                   </Text>
                  
                 
            
             
             </View>
+            </TouchableOpacity>
           )}
         />
       </View>

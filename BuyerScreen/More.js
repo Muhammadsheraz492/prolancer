@@ -1,9 +1,13 @@
 import { View, Text , TouchableOpacity,Image,StyleSheet , FlatList} from 'react-native'
 import React from 'react'
 import Entypo from "react-native-vector-icons/Entypo";
+import { useSelector } from 'react-redux';
 
-export default function More() {
-
+export default function More({navigation}) {
+  let email=useSelector((state)=>state.counter.useremail)
+  let username=useSelector((state)=>state.counter.username)
+  let user_id=useSelector((state)=>state.counter.user_id)
+  console.log(user_id);
   return (
     <View
     style={{
@@ -12,9 +16,8 @@ export default function More() {
       backgroundColor: "white",
     }}
   >
- <View
-          style={{
-            height: "6%",
+ <View style={{
+ height: "6%",
           }}
         />
  <View
@@ -56,40 +59,8 @@ export default function More() {
               textAlign: 'center',
               paddingHorizontal: 30,
             }}>
-          UserName
+         {username}
           </Text>
-          <View
-            style={{
-              height: 20,
-            }}
-          />
-           <TouchableOpacity
-            onPress={() => {
-              // openEmailApp();
-            }}>
-
-          <View
-          style={{
-            width:140,
-            height:35,
-            borderRadius:20,
-            backgroundColor:"#000000",
-            justifyContent:"center",
-            alignItems:"center",
-            alignSelf:"center"
-          }}
-          >
- <Text
-            style={{
-              fontSize: 15,
-              color: '#fff',
-              textAlign: 'center',
-              
-            }}>
-          Edit Profile
-          </Text>
-          </View>
-          </TouchableOpacity>
 
           <View
             style={{
@@ -98,7 +69,7 @@ export default function More() {
           />
           <TouchableOpacity
             onPress={() => {
-              // openEmailApp();
+             navigation.navigate("PostProject")
             }}>
             <View
               style={{
@@ -188,6 +159,60 @@ export default function More() {
               height: 10,
             }}
           />
+          <View
+            style={{
+              // borderWidth:1,
+              borderBottomWidth: 1,
+              borderBottomColor: '#000000',
+              opacity: 0.1,
+            }}
+          />
+          <View
+            style={{
+              height: 10,
+            }}
+          />
+          <TouchableOpacity
+            onPress={() => {
+              // onShare();
+              navigation.navigate("Bids")
+            }}>
+            <View
+              style={{
+                justifyContent: 'space-between',
+                flexDirection: 'row',
+              }}>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  // justifyContent:"center"
+                }}>
+             
+                <Text
+                  style={{
+                    fontSize: 14,
+                    color: '#000000',
+                    marginLeft: 20,
+                  }}>
+                 Bids Of Projects
+                </Text>
+              </View>
+              <Image
+                style={{
+                  height: 20,
+                  width: 20,
+                }}
+                source={require('../assets/Left.png')}
+              />
+            </View>
+          </TouchableOpacity>
+     
+          <View
+            style={{
+              height: 10,
+            }}
+          />
 
           <View
             style={{
@@ -205,6 +230,7 @@ export default function More() {
           <TouchableOpacity
             onPress={() => {
               // copyToClipboard()
+              navigation.navigate("Notifications")
             }}>
             <View
               style={{
@@ -224,7 +250,7 @@ export default function More() {
                     color: '#000000',
                     marginLeft: 20,
                   }}>
-                 Notification 
+                 Notifications
                 </Text>
               </View>
               <Image
@@ -258,6 +284,7 @@ export default function More() {
           <TouchableOpacity
             onPress={() => {
               // onShare();
+              navigation.navigate("FQ")
             }}>
             <View
               style={{
@@ -317,6 +344,8 @@ export default function More() {
           <TouchableOpacity
             onPress={() => {
               // onShare();
+              navigation.navigate("Support")
+
             }}>
             <View
               style={{
@@ -353,7 +382,7 @@ export default function More() {
               height: 10,
             }}
           />
-          <View
+          {/* <View
             style={{
               // borderWidth:1,
               borderBottomWidth: 1,
@@ -369,6 +398,8 @@ export default function More() {
           <TouchableOpacity
             onPress={() => {
               // onShare();
+              navigation.navigate("About")
+
             }}>
             <View
               style={{
@@ -400,7 +431,9 @@ export default function More() {
               />
             </View>
           </TouchableOpacity>
+          */}
         </View>
+        
       
     </View>
   )
