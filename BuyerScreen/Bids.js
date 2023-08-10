@@ -1,11 +1,15 @@
 
 import { View, Text , TextInput,StyleSheet , FlatList, TouchableOpacity} from 'react-native'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Entypo from "react-native-vector-icons/Entypo";
 
-export default function Bids({navigation}) {
+export default function Bids() {
 
   const [Jobs,SetJobs] = useState([]);
+  useEffect(()=>{
+   
+  },[])
+  cn
   return (
     <View
     style={{
