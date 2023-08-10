@@ -1,4 +1,4 @@
-import { View, Text, ScrollView , TouchableOpacity} from 'react-native'; // Import ScrollView
+import { View, Text, ScrollView , TouchableOpacity, StyleSheet, TextInput} from 'react-native'; // Import ScrollView
 import React , {useState}from 'react';
 import FormInput from "../Components/FormInput";
 import LoginBtn from "../Components/Loginbtn";
@@ -103,19 +103,23 @@ export default function PostProject({navigation}) {
          
         <Text style={{ fontSize: 15, marginLeft:18}}>Project description:</Text>
       
-     <FormInput
-          // style={styles.input}
-          onChangeText={(PostProjectDes) => setPostProjectDes(PostProjectDes)}
-          // value={text}
-          labelValue={PostProjectDes}
-          // secureTextEntry={true}
-          // keyboardType="email-address"
-          placeholder="Project Description"
-          autoCapitalize="none"
-          autocorrect={false}
-        />
+        <View style={styles.proposalTextContainer}>
+          <TextInput
+            style={styles.proposalText}
+            multiline={true}
+            numberOfLines={5}
+            placeholder="Write the Project Description... "
+            value={PostProjectDes}
+            onChangeText={text => setPostProjectDes(text)}
+          />
+        </View>
 
+        <View
 
+style={{
+    height:10
+}}
+/>
   
  <Text style={{ fontSize: 15, marginLeft:18}}>Enter your Estimated budget?</Text>
       
@@ -126,7 +130,7 @@ export default function PostProject({navigation}) {
            labelValue={Budget}
            // secureTextEntry={true}
            // keyboardType="email-address"
-           placeholder="Enterthe Budget"
+           placeholder="Enter the Budget"
            autoCapitalize="none"
            autocorrect={false}
          />
@@ -159,3 +163,65 @@ style={{
     </View>
   );
 }
+
+
+
+
+const styles = StyleSheet.create({
+  heading: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    alignSelf: 'center',
+    color: '#000000',
+  },
+  subText: {
+    fontSize: 14,
+    color: 'grey',
+  },
+  jobDetail: {
+    fontSize: 16,
+    alignSelf: 'center',
+    color: '#000000',
+  },
+  proposalTextContainer: {
+    borderWidth: 1,
+    borderColor: '#000000',
+    padding: 10,
+    borderRadius: 5,
+    width:"90%",
+alignSelf:"center",
+    marginTop: 10,
+  },
+  proposalText: {
+    fontSize: 16,
+    color: '#000000',
+    height: 70, // Set the height of the TextInput
+  },
+  skill: {
+    fontSize: 16,
+    color: '#000000',
+    fontWeight: 'bold',
+  },
+
+  proposalText: {
+    fontSize: 16,
+    color: '#000000',
+  },
+  dashboardButton: {
+    backgroundColor: '#000000',
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+    borderRadius: 5,
+    alignSelf: 'center',
+    alignItems:"center",
+
+    width:"50%",
+    marginTop: 20,
+    marginBottom:20
+  },
+  dashboardButtonText: {
+    color: 'white',
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
+});

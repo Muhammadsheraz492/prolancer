@@ -26,6 +26,7 @@ import FileUpload from "./BuyerScreen/FileUpload";
 import Chat from "./BuyerScreen/Chat";
 import TaskDetail from "./BuyerScreen/TaskDetail";
 import JobDetail from "./BuyerScreen/JobDetail";
+import UserChat from "./BuyerScreen/UserChat";
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
@@ -146,6 +147,12 @@ function App() {
             }}
             name="JobDetail"
             component={JobDetail}
+          />
+           <Stack.Screen
+           
+            name="UserChat"
+            component={UserChat}
+          options={({ route }) => ({ title: route.params.username })}
           />
         </Stack.Navigator>
       </NavigationContainer>
