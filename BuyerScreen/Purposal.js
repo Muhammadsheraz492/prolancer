@@ -124,6 +124,15 @@ Purposal Lists
         marginBottom:10,
         height:"80%"
         }}>
+{Jobs?
+<View  style={{flex:1,justifyContent:"center",alignItems:"center"}}>
+<Text>No Data Found</Text>
+  </View>
+
+:
+
+
+
         <FlatList
           data={Jobs}
           showsVerticalScrollIndicator={false}
@@ -167,6 +176,7 @@ Purposal Lists
             </View>
           )}
         />
+      }
       </View>
       
     </View>

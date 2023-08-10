@@ -22,6 +22,7 @@ import { Provider } from "react-redux";
 import { store } from "./Redux/store";
 import JobDetail from "./BuyerScreen/JobDetails";
 import Bids from "./BuyerScreen/Bids";
+import BidDetail from "./BuyerScreen/BidDetails";
 
 
 // console.log('Project ID:', projectId);
@@ -101,6 +102,13 @@ function App() {
             }}
             name="Bids"
             component={Bids}
+          />
+                <Stack.Screen
+            options={{
+              headerShown: false,
+            }}
+            name="BidDetail"
+            component={BidDetail}
           />
         </Stack.Navigator>
       </NavigationContainer>
