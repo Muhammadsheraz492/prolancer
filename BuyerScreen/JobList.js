@@ -131,7 +131,8 @@ export default function JobList() {
 JobDeta:item.description ,
 Username:item.user_name ,
 Skill:["React"],
-project_id:item.doc_id
+project_id:item.doc_id,
+project_email:item.user_email
 
 })}
             >

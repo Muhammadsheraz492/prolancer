@@ -10,7 +10,7 @@ import { useSelector } from 'react-redux';
 export default function JobDetail() {
     let navigation = useNavigation()
     let route = useRoute()
-    const { JobDeta, Username, Skill, project_id } = route.params;
+    const { JobDeta, Username, Skill, project_id ,project_email} = route.params;
     const collectionRef = collection(firestore, 'Bids');
     const [loader, setloader] = useState(false)
     let user_id = useSelector((state) => state.counter.user_id)
@@ -25,6 +25,8 @@ export default function JobDetail() {
             "bid_id": document_id,
             "user_id": user_id,
             "bid": proposalText,
+            "purposal_status":"pending",
+            "project_owner_email":project_email
 
         }
         setDoc(userdocumentref, Data).then(() => {

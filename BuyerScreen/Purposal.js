@@ -1,74 +1,66 @@
 
-import { View, Text , TextInput,StyleSheet , FlatList} from 'react-native'
-import React from 'react'
+import { View, Text , TextInput,StyleSheet , FlatList, Alert} from 'react-native'
+import React, { useEffect, useState } from 'react'
+import { collection, getDocs, query, where } from 'firebase/firestore';
+import { firestore } from '../firebase/firebase';
+import { useSelector } from 'react-redux';
+import { useNavigation } from '@react-navigation/native';
 
 export default function Purposal() {
+  let navigation=useNavigation()
   const [search, setsearch] = React.useState();
   const [data, setdata] = React.useState([]);
   const [originalData, setoriginalData] = React.useState([]);
+  let user_id = useSelector((state) => state.counter.user_id)
+  const [loader,setloader]=useState(true)
   const searchFilter = text => {
     if (text) {
-      const newdata = originalData.filter(item => {
-        const itemdata = item.bas_route
-          ? item.bas_route.toUpperCase()
+      const newdata = Jobs.filter(item => {
+        const itemdata = item.bid
+          ? item.bid.toUpperCase()
           : ''.toUpperCase();
         const textData = text.toUpperCase();
         return itemdata.indexOf(textData) > -1;
       });
-      setdata(newdata);
+      setJobs(newdata);
       setsearch(text);
     } else {
-      setdata(originalData);
+      setJobs(tempJobs);
       setsearch(text);
     }
   };
-  const Jobs = [
-    {
-      JobDetail: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.',
-      Username: 'Username',
-      
-    },
-    {
-      JobDetail: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.',
-  
-      Username: 'Username',
-  
-    },
-    {
-      JobDetail: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.',
-      Username: 'Username',
-      
-    },
-    {
-      JobDetail: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.',
-  
-      Username: 'Username',
-  
-    },
-    {
-      JobDetail: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.',
-      Username: 'Username',
-      
-    },
-    {
-      JobDetail: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.',
-  
-      Username: 'Username',
-  
-    },
-    {
-      JobDetail: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.',
-      Username: 'Username',
-      
-    },
-    {
-      JobDetail: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.',
-  
-      Username: 'Username',
-  
-    },
-  
-  ];
+  const [Jobs,setJobs] =useState("");
+  const [tempJobs,settempJobs] =useState("");
+  const BidUploaded = () => {
+    setloader(true)
+
+    const usersRef = collection(firestore, 'Bids');
+    const q = query(usersRef,
+        where('user_id', '==', user_id)
+    );
+    getDocs(q).then((querySnapshot) => {
+      console.log(querySnapshot.docs.length);
+      let temp=[]
+      querySnapshot.forEach((data) => {
+        console.log(data.id);
+        temp.push(data.data())
+      })
+      setJobs(temp)
+      settempJobs(temp)
+   
+    }).catch(() => {
+        setloader(false)
+        Alert.alert("Opps", "Something went wrong")
+
+    })
+
+}
+useEffect(()=>{
+  navigation.addListener("focus",()=>{
+    BidUploaded()
+
+  })
+},[])
   return (
     <View
     style={{
@@ -156,17 +148,17 @@ Purposal Lists
                     color: '#000000',
                     // fontWeight: 'bold',
                   }}>
-                  {item.JobDetail.slice(0, 50)+"  ..."}
+                  {item.bid.slice(0, 50)+"  ..."}
                 </Text>
               
                   <Text
                     style={{
                       marginTop:10,
                       fontSize: 15,
-                      color: '#5B5B5B',
+                      color: 'red',
                       // fontWeight:"bold"
                     }}>
-                    {item.Username}
+                  Status of Bid:<Text>  {item.purposal_status}</Text>
                   </Text>
                  
                 

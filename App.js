@@ -21,6 +21,7 @@ import PostProject from "./BuyerScreen/PortProject";
 import { Provider } from "react-redux";
 import { store } from "./Redux/store";
 import JobDetail from "./BuyerScreen/JobDetails";
+import Bids from "./BuyerScreen/Bids";
 
 
 // console.log('Project ID:', projectId);
@@ -93,6 +94,13 @@ function App() {
             }}
             name="JobDetail"
             component={JobDetail}
+          />
+          <Stack.Screen
+            options={{
+              headerShown: false,
+            }}
+            name="Bids"
+            component={Bids}
           />
         </Stack.Navigator>
       </NavigationContainer>
