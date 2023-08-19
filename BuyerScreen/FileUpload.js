@@ -13,53 +13,45 @@ import * as FileSystem from 'expo-file-system';
 import * as ImagePicker from 'expo-image-picker'
 function FileUpload({ navigation }) {
 
-    const pickImage = async () => {
-        const result = await ImagePicker.launchImageLibraryAsync({
-            mediaTypes: ImagePicker.MediaTypeOptions.Images,
-            allowsEditing: true,
-            aspect: [4, 3],
-            quality: 1,
+    const pickFile = async () => {
+        const result = await DocumentPicker.getDocumentAsync({
+          type: "*/*", // Allows picking all file types
         });
-
-        if (!result.canceled) {
-            //   setImage(result.uri);
-            //     uploadImageToBucket(result.assets[0].uri).then((val)=>{
-            // console.log(val);
-            //     })
-            const metadata = {
-                contentType: 'image/jpeg'
-            };
-            const storageRef = ref(storage, 'images/' + Date.now());
-            const imageBlob = await getBlobFroUri(result.assets[0].uri)
-
-            const uploadTask = uploadBytesResumable(storageRef, imageBlob, metadata);
-            // console.log(upload
-            uploadTask.on('state_changed',
-                (snapshot) => {
-                    // Handle upload progress here
-                    const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-                    console.log('Upload is ' + progress + '% done');
-                },
-                (error) => {
-                    // Handle unsuccessful upload here
-                    console.error('Upload error:', error);
-                },
-               async () => {
-                    // Handle successful upload here
-                    console.log('Upload completed successfully');
-                    try {
-                        const downloadURL = await getDownloadURL(storageRef);
-                        console.log('Download URL:', downloadURL);
-                      } catch (error) {
-                        console.error('Error getting download URL:', error);
-                      }
-                }
-            );
-
-
-
+      console.log(result);
+        if (result.canceled === false) {
+          const metadata = {
+            contentType: result.assets[0].mimeType, // Use the actual content type of the picked file
+          };
+      
+          const storageRef = ref(storage, 'files/' + Date.now() + '/' + result.assets[0].name);
+          const fileBlob = await getBlobFroUri(result.assets[0].uri);
+      
+          const uploadTask = uploadBytesResumable(storageRef, fileBlob, metadata);
+      
+          uploadTask.on('state_changed',
+            (snapshot) => {
+              // Handle upload progress here
+              const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+              console.log('Upload is ' + progress + '% done');
+            },
+            (error) => {
+              // Handle unsuccessful upload here
+              console.error('Upload error:', error);
+            },
+            async () => {
+              // Handle successful upload here
+              console.log('Upload completed successfully');
+              try {
+                const downloadURL = await getDownloadURL(storageRef);
+                console.log('Download URL:', downloadURL);
+              } catch (error) {
+                console.error('Error getting download URL:', error);
+              }
+            }
+          );
         }
-    };
+      };
+      
 
     const getBlobFroUri = async (uri) => {
         const blob = await new Promise((resolve, reject) => {
@@ -218,7 +210,7 @@ function FileUpload({ navigation }) {
 
                 <TouchableOpacity style={{ height: 30, alignItems: "center" }}
 
-                    onPress={pickImage}
+                    onPress={pickFile}
                 >
 
                     <LoginBtn
