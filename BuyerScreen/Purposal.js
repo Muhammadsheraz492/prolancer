@@ -1,5 +1,5 @@
 
-import { View, Text , TextInput,StyleSheet , FlatList, Alert} from 'react-native'
+import { View, Text, TextInput, StyleSheet, FlatList, Alert, TouchableOpacity } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { collection, getDocs, query, where } from 'firebase/firestore';
 import { firestore } from '../firebase/firebase';
@@ -7,12 +7,12 @@ import { useSelector } from 'react-redux';
 import { useNavigation } from '@react-navigation/native';
 
 export default function Purposal() {
-  let navigation=useNavigation()
+  let navigation = useNavigation()
   const [search, setsearch] = React.useState();
   const [data, setdata] = React.useState([]);
   const [originalData, setoriginalData] = React.useState([]);
   let user_id = useSelector((state) => state.counter.user_id)
-  const [loader,setloader]=useState(true)
+  const [loader, setloader] = useState(true)
   const searchFilter = text => {
     if (text) {
       const newdata = Jobs.filter(item => {
@@ -29,64 +29,64 @@ export default function Purposal() {
       setsearch(text);
     }
   };
-  const [Jobs,setJobs] =useState("");
-  const [tempJobs,settempJobs] =useState("");
+  const [Jobs, setJobs] = useState("");
+  const [tempJobs, settempJobs] = useState("");
   const BidUploaded = () => {
     setloader(true)
 
     const usersRef = collection(firestore, 'Bids');
     const q = query(usersRef,
-        where('user_id', '==', user_id)
+      where('user_id', '==', user_id)
     );
     getDocs(q).then((querySnapshot) => {
       console.log(querySnapshot.docs.length);
-      let temp=[]
+      let temp = []
       querySnapshot.forEach((data) => {
         console.log(data.id);
         temp.push(data.data())
       })
       setJobs(temp)
       settempJobs(temp)
-   
+
     }).catch(() => {
-        setloader(false)
-        Alert.alert("Opps", "Something went wrong")
+      setloader(false)
+      Alert.alert("Opps", "Something went wrong")
 
     })
 
-}
-useEffect(()=>{
-  navigation.addListener("focus",()=>{
-    BidUploaded()
+  }
+  useEffect(() => {
+    navigation.addListener("focus", () => {
+      BidUploaded()
 
-  })
-},[])
+    })
+  }, [])
   return (
     <View
-    style={{
-      flex: 1,
-    alignItems:"center",
-      backgroundColor: "white",
-    }}
-  >
- <View
-          style={{
-            height: "6%",
-          }}
-        />
-    <Text
-    style=
-    {{
-      fontSize:20,
-      fontWeight:"bold",
-      alignSelf:"center",
-      color:"#000000"
-    }}
+      style={{
+        flex: 1,
+        alignItems: "center",
+        backgroundColor: "white",
+      }}
     >
+      <View
+        style={{
+          height: "6%",
+        }}
+      />
+      <Text
+        style=
+        {{
+          fontSize: 20,
+          fontWeight: "bold",
+          alignSelf: "center",
+          color: "#000000"
+        }}
+      >
 
-Purposal Lists
-    </Text>
-    <View
+        Purposal Lists
+      </Text>
+      <View
         style={{
           width: '90%',
           alignSelf: 'center',
@@ -104,7 +104,7 @@ Purposal Lists
             flexDirection: 'row',
             alignItems: 'center',
           }}>
-        
+
           <TextInput
             style={styles.input}
             onChangeText={text => searchFilter(text)}
@@ -115,70 +115,89 @@ Purposal Lists
             autoCapitalize="none"
           />
         </View>
-        
+
       </View>
       <View
         style={{
           width: '90%',
           alignSelf: 'center',
-        marginBottom:10,
-        height:"80%"
+          marginBottom: 10,
+          height: "80%"
         }}>
-{Jobs?
-<View  style={{flex:1,justifyContent:"center",alignItems:"center"}}>
-<Text>No Data Found</Text>
-  </View>
+        {Jobs.length <= 0 ?
+          <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+            <Text>No Data Found</Text>
+          </View>
 
-:
+          :
 
 
 
-        <FlatList
-          data={Jobs}
-          showsVerticalScrollIndicator={false}
-          renderItem={({item}) => (
-            <View
-              style={{
-                width: '100%',
-        marginBottom:10
-             ,
-                backgroundColor: '#F1F1F1',
-                borderRadius: 10,
-                marginTop: 10,
-                padding:20,
-              
-               
-         
-              }}>
-            
-                <Text
+          <FlatList
+            data={Jobs}
+            showsVerticalScrollIndicator={false}
+            renderItem={({ item }) => (
+              <TouchableOpacity
+
+                onPress={() => navigation.navigate("SellerDetail", {
+
+                  JobDetail: item.JobDetail,
+                  Username: item.Username,
+                  Skill: item.Skills,
+                  Bid: item.bid,
+                  project_id: item.project_id,
+                  user_id: item.user_id,
+                  bid_id: item.bid_id,
+                  status: item.purposal_status
+
+                })}
+
+
+              >
+
+                <View
                   style={{
-                    fontSize: 17,
-                    color: '#000000',
-                    // fontWeight: 'bold',
+                    width: '100%',
+                    marginBottom: 10
+                    ,
+                    backgroundColor: '#F1F1F1',
+                    borderRadius: 10,
+                    marginTop: 10,
+                    padding: 20,
+
+
+
                   }}>
-                  {item.bid.slice(0, 50)+"  ..."}
-                </Text>
-              
+
                   <Text
                     style={{
-                      marginTop:10,
+                      fontSize: 17,
+                      color: '#000000',
+                      // fontWeight: 'bold',
+                    }}>
+                    {item.bid.slice(0, 50) + "  ..."}
+                  </Text>
+
+                  <Text
+                    style={{
+                      marginTop: 10,
                       fontSize: 15,
                       color: 'red',
                       // fontWeight:"bold"
                     }}>
-                  Status of Bid:<Text>  {item.purposal_status}</Text>
+                    Status of Bid:<Text>  {item.purposal_status}</Text>
                   </Text>
-                 
-                
-           
-            
-            </View>
-          )}
-        />
-      }
+
+
+
+
+                </View>
+              </TouchableOpacity>
+            )}
+          />
+        }
       </View>
-      
+
     </View>
   )
 }

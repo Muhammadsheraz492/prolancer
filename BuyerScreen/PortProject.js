@@ -101,9 +101,9 @@ export default function PostProject() {
                     autoCapitalize="none"
                     autocorrect={false}
                 />
-                <Text style={{ fontSize: 14, marginLeft: 18 }}>What platform do you want the app to be developed for?</Text>
+                {/* <Text style={{ fontSize: 14, marginLeft: 18 }}>What platform do you want the app to be developed for?</Text> */}
 
-                {radioOptions.map((option) => (
+                {/* {radioOptions.map((option) => (
                     <TouchableOpacity
                         key={option.value}
                         style={{
@@ -139,7 +139,7 @@ export default function PostProject() {
                         </View>
                         <Text>{option.label}</Text>
                     </TouchableOpacity>
-                ))}
+                ))} */}
 
                 <Text style={{ fontSize: 15, marginLeft: 18 }}>Project description:</Text>
 

@@ -23,6 +23,11 @@ import { store } from "./Redux/store";
 import JobDetail from "./BuyerScreen/JobDetails";
 import Bids from "./BuyerScreen/Bids";
 import BidDetail from "./BuyerScreen/BidDetails";
+import Tasklist from "./BuyerScreen/Tasklist";
+import FileUpload from "./BuyerScreen/FileUpload";
+import Chat from "./BuyerScreen/Chat";
+import SellerDetail from "./Seller/BidDetails";
+import TaskDetail from "./BuyerScreen/TaskDetails";
 
 
 // console.log('Project ID:', projectId);
@@ -110,6 +115,43 @@ function App() {
             name="BidDetail"
             component={BidDetail}
           />
+                   <Stack.Screen
+            options={{
+              headerShown: false,
+            }}
+            name="SellerDetail"
+            component={
+              SellerDetail
+            }
+          />
+              <Stack.Screen
+            options={{
+              headerShown: false,
+            }}
+            name="Tasklist"
+            component={Tasklist}
+          />
+            <Stack.Screen
+            options={{
+              headerShown: false,
+            }}
+            name="FileUpload"
+            component={FileUpload}
+          />
+            <Stack.Screen
+            options={{
+              headerShown: false,
+            }}
+            name="Chat"
+            component={Chat}
+          />
+             <Stack.Screen
+            options={{
+              headerShown: false,
+            }}
+            name="TaskDetail"
+            component={TaskDetail}
+          />
         </Stack.Navigator>
       </NavigationContainer>
     </SafeAreaView>
@@ -132,4 +174,7 @@ const TabNavi = () => {
     </Tab.Navigator>
   );
 };
+
+
+
 export default App;

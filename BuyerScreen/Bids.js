@@ -68,7 +68,12 @@ export default function Bids() {
 
         Bids
       </Text>
+{Jobs<=0?
+<View  style={{flex:1,justifyContent:"center",alignItems:"center"}}>
+<Text>Data has not Found</Text>
+  </View>
 
+:
       <View
         style={{
           width: '90%',
@@ -89,7 +94,8 @@ export default function Bids() {
                 Bid:item.bid,
                 project_id:item.project_id,
                 user_id:item.user_id,
-                bid_id:item.bid_id
+                bid_id:item.bid_id,
+                status:item.purposal_status
 
               })}
             >
@@ -141,6 +147,7 @@ export default function Bids() {
           )}
         />
       </View>
+}
 
     </View>
   )

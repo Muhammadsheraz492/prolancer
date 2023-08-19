@@ -4,18 +4,14 @@ import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Modal, ActivityIn
 import Entypo from 'react-native-vector-icons/Entypo';
 import { firestore } from '../firebase/firebase';
 import axios from 'axios';
-import { useSelector } from 'react-redux';
-export default function BidDetail({ route, navigation }) {
+export default function  SellerDetail({ route, navigation }) {
     const { Skill, Bid, project_id, user_id,bid_id,status } = route.params;
     const [selectedStatus, setSelectedStatus] = useState(null);
     const [Username, setUsername] = useState("")
     const [JobDetail, setJobDetail] = useState("")
     const [loader,setloader]=useState(false)
+    const [ProjectOwnerEmail,SetProjectOwnerEmail]=useState('')
     const [DashboardCheck,setDashboardCheck]=useState(status)
-    // const [CheckLogedUser,setCheckLogedUser]=useSelector()
-  let CheckLogedUser=useSelector((state)=>state.counter.useremail)
-
-    const [project_owner_email,SetProjectOwnerEmail]=useState("")
     console.log("This is Project Id", project_id);
     console.log("This is User Id", user_id);
 
@@ -32,8 +28,7 @@ export default function BidDetail({ route, navigation }) {
             .then((querySnapshot) => {
                 //   let temparray = [];
                 const doc = querySnapshot.docs[0];
-                console.log(doc.data());
-                SetProjectOwnerEmail(doc.data()["user_email"]);
+                console.log(doc.data()["user_email"]);
                 setUsername(doc.data()["user_name"])
                 setJobDetail(doc.data()["description"])
             })
@@ -175,33 +170,15 @@ export default function BidDetail({ route, navigation }) {
                 </View>
 
                 {DashboardCheck=="pending" && (
-                    <View>
-                        <TouchableOpacity
-                            style={styles.dashboardButton}
-                            onPress={() => Acept()}
-                        >
-                            <Text style={styles.dashboardButtonText}>Approved</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity
-                            style={styles.dashboardButton3}
-                            onPress={() => Reject()}
-                        >
-                            <Text style={styles.dashboardButtonText}>Rejected</Text>
-                        </TouchableOpacity>
+                    <View  style={{height:100,justifyContent:"center"}}>
+                     <Text>Project Status:{'\t'}{DashboardCheck}</Text>
                     </View>
                 )}
 
                 {DashboardCheck === 'active' && (
                     <TouchableOpacity
                         style={styles.dashboardButton}
-                        onPress={() => navigation.navigate('Tasklist',{
-                          status:  project_owner_email==CheckLogedUser?true:false,
-                          owner_email:project_owner_email,
-                          project_id:project_id,
-                          user_id:user_id
-
-
-                        })}
+                        onPress={() => navigation.navigate('Tasklist')}
                     >
                         <Text style={styles.dashboardButtonText}>Dashboard</Text>
                     </TouchableOpacity>
