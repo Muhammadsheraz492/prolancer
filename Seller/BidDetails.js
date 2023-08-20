@@ -1,19 +1,22 @@
-import { collection, getDoc, getDocs, query, where,updateDoc, doc } from 'firebase/firestore';
+import { collection, getDoc, getDocs, query, where, updateDoc, doc } from 'firebase/firestore';
 import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Modal, ActivityIndicator, Alert } from 'react-native';
 import Entypo from 'react-native-vector-icons/Entypo';
 import { firestore } from '../firebase/firebase';
 import axios from 'axios';
-export default function  SellerDetail({ route, navigation }) {
-    const { Skill, Bid, project_id, user_id,bid_id,status ,item} = route.params;
+import LoginBtn from '../Components/Loginbtn';
+export default function SellerDetail({ route, navigation }) {
+    const { Skill, Bid, project_id, user_id, bid_id, status, item } = route.params;
     const [selectedStatus, setSelectedStatus] = useState(null);
     const [Username, setUsername] = useState("")
     const [JobDetail, setJobDetail] = useState("")
-    const [loader,setloader]=useState(false)
-    const [ProjectOwnerEmail,SetProjectOwnerEmail]=useState('')
-    const [DashboardCheck,setDashboardCheck]=useState(status)
+    const [loader, setloader] = useState(false)
+    const [ProjectOwnerEmail, SetProjectOwnerEmail] = useState('')
+    const [Owner_id,SetOwner_id]=useState("")
+    const [DashboardCheck, setDashboardCheck] = useState(status)
     console.log("This is Project Id", project_id);
     console.log("This is User Id", user_id);
+    // console.log("This Project Owner Id:"+item.);
 
     const handleButtonPress = (status) => {
         // if(status)==""
@@ -31,6 +34,7 @@ export default function  SellerDetail({ route, navigation }) {
                 console.log(doc.data()["user_email"]);
                 setUsername(doc.data()["user_name"])
                 setJobDetail(doc.data()["description"])
+                SetOwner_id(doc.data()["user_id"])
             })
             .catch((err) => {
                 console.log(err);
@@ -61,46 +65,46 @@ export default function  SellerDetail({ route, navigation }) {
             })
             .catch((error) => {
                 console.log(error);
-                 setloader(false)
-                Alert.alert("Error","Something went wrong")
+                setloader(false)
+                Alert.alert("Error", "Something went wrong")
             });
 
     }
 
-    const AllocateProject = async (token,username,body) => {
-      const bidDocRef = doc(firestore, 'Bids',bid_id );
-    
-      try {
-        await updateDoc(bidDocRef, {
-          "purposal_status": 'active'
-          // Update other fields as needed
-        });
-        SendNotification(token,username,body);
-        
-      } catch (error) {
-        console.error('Error updating document:', error);
-      }
+    const AllocateProject = async (token, username, body) => {
+        const bidDocRef = doc(firestore, 'Bids', bid_id);
+
+        try {
+            await updateDoc(bidDocRef, {
+                "purposal_status": 'active'
+                // Update other fields as needed
+            });
+            SendNotification(token, username, body);
+
+        } catch (error) {
+            console.error('Error updating document:', error);
+        }
     };
-    
-    const AllocateProject2 = async (token,username,body) => {
-      const bidDocRef = doc(firestore, 'Bids',bid_id );
-    
-      try {
-        await updateDoc(bidDocRef, {
-          "purposal_status": 'Rejected'
-          // Update other fields as needed
-        });
-        SendNotification(token,username,body);
-        
-      } catch (error) {
-        console.error('Error updating document:', error);
-         setloader(false)
-                Alert.alert("Error","Something went wrong")
-      }
+
+    const AllocateProject2 = async (token, username, body) => {
+        const bidDocRef = doc(firestore, 'Bids', bid_id);
+
+        try {
+            await updateDoc(bidDocRef, {
+                "purposal_status": 'Rejected'
+                // Update other fields as needed
+            });
+            SendNotification(token, username, body);
+
+        } catch (error) {
+            console.error('Error updating document:', error);
+            setloader(false)
+            Alert.alert("Error", "Something went wrong")
+        }
     };
-      
+
     const Acept = () => {
-     setloader(true)
+        setloader(true)
         getDocs(query(collection(firestore, 'user'), where('user_id', '==', user_id)))
             .then((querySnapshot) => {
                 //   let temparray = [];
@@ -109,16 +113,16 @@ export default function  SellerDetail({ route, navigation }) {
                 // console.log(doc.data()[""]);
                 // setUsername(doc.data()["user_name"])
                 // setJobDetail(doc.data()["description"])
-                AllocateProject(doc.data()["device_token"],doc.data()["user_name"],"You'r Bid are Acepted")
+                AllocateProject(doc.data()["device_token"], doc.data()["user_name"], "You'r Bid are Acepted")
             })
             .catch((err) => {
                 setloader(false)
-                Alert.alert("Error","Something went wrong")
+                Alert.alert("Error", "Something went wrong")
                 console.log(err);
             });
 
     }
-       const Reject = () => {
+    const Reject = () => {
 
         getDocs(query(collection(firestore, 'user'), where('user_id', '==', user_id)))
             .then((querySnapshot) => {
@@ -128,7 +132,7 @@ export default function  SellerDetail({ route, navigation }) {
                 // console.log(doc.data()[""]);
                 // setUsername(doc.data()["user_name"])
                 // setJobDetail(doc.data()["description"])
-                AllocateProject2(doc.data()["device_token"],doc.data()["user_name"],"You'r Bid are Rejected")
+                AllocateProject2(doc.data()["device_token"], doc.data()["user_name"], "You'r Bid are Rejected")
             })
             .catch((err) => {
                 console.log(err);
@@ -169,9 +173,9 @@ export default function  SellerDetail({ route, navigation }) {
                     </Text>
                 </View>
 
-                {DashboardCheck=="pending" && (
-                    <View  style={{height:100,justifyContent:"center"}}>
-                     <Text>Project Status:{'\t'}{DashboardCheck}</Text>
+                {DashboardCheck == "pending" && (
+                    <View style={{ height: 100, justifyContent: "center" }}>
+                        <Text>Project Status:{'\t'}{DashboardCheck}</Text>
                     </View>
                 )}
 
@@ -179,26 +183,54 @@ export default function  SellerDetail({ route, navigation }) {
                     <TouchableOpacity
                         style={styles.dashboardButton}
                         // onPress={() => navigation.navigate('Tasklist')}
-                        onPress={() => navigation.navigate('Tasklist',{
-                            status:false,
-                            owner_email:item.project_owner_email,
-                            project_id:item.project_id,
-                            user_id:user_id
-  
-  
-                          })}
+                        onPress={() => navigation.navigate('Tasklist', {
+                            status: false,
+                            owner_email: item.project_owner_email,
+                            project_id: item.project_id,
+                            user_id: user_id
+
+
+                        })}
                     >
                         <Text style={styles.dashboardButtonText}>Dashboard</Text>
                     </TouchableOpacity>
                 )}
 
-              
+             
 
-            </View>  
-            <Modal  visible={loader}  transparent >
-   <View  style={{flex:1,justifyContent:"center",alignItems:"center"}}>
-<ActivityIndicator size={"large"}  color={"black"} />
-   </View>
+                    {/* <TouchableOpacity style={{ height: 100,alignItems:"center" }}
+
+
+                    > */}
+                        <TouchableOpacity 
+                          onPress={() => navigation.navigate('UserChat',{
+                            // status:  status,
+                            // owner_email:"admin@gmail",
+                            // project_id:project_id,
+                            user_id:user_id,
+                            username:Username,
+                            reciver_id:Owner_id
+
+                        
+                          })}
+                      
+                   
+                          
+                        
+                        style={{width:"90%",alignSelf:"center",height:50,backgroundColor:"#133264",borderRadius:15,alignItems:"center",justifyContent:"center"}}>
+                        <Text style={{textAlign:"center",fontSize:20,color:"#fff"}}>Chat</Text>
+                        </TouchableOpacity>
+
+
+
+                    {/* </TouchableOpacity> */}
+             
+
+            </View>
+            <Modal visible={loader} transparent >
+                <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+                    <ActivityIndicator size={"large"} color={"black"} />
+                </View>
             </Modal>
         </ScrollView>
     );

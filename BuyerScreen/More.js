@@ -383,6 +383,60 @@ export default function More({navigation}) {
               height: 10,
             }}
           />
+          <View
+            style={{
+              // borderWidth:1,
+              borderBottomWidth: 1,
+              borderBottomColor: '#000000',
+              opacity: 0.1,
+            }}
+          />
+          <View
+            style={{
+              height: 10,
+            }}
+          />
+          <TouchableOpacity
+            onPress={() => {
+              // onShare();
+              navigation.navigate("LoginScreen")
+
+            }}>
+            <View
+              style={{
+                justifyContent: 'space-between',
+                flexDirection: 'row',
+              }}>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  alignItems: 'center',
+               
+                }}>
+              
+                <Text
+                  style={{
+                    fontSize: 14,
+                    color: '#000000',
+                    marginLeft: 20,
+                  }}>
+                  Log Out 
+                </Text>
+              </View>
+              <Image
+                style={{
+                  height: 20,
+                  width: 20,
+                }}
+                source={require('../assets/Left.png')}
+              />
+            </View>
+          </TouchableOpacity>
+          <View
+            style={{
+              height: 10,
+            }}
+          />
           {/* <View
             style={{
               // borderWidth:1,

@@ -12,16 +12,16 @@ import { firestore } from '../firebase/firebase';
 
 function Tasklist() {
   const [focusedTab, setFocusedTab] = useState('Dashboard');
-  let route=useRoute()
-  const {status,owner_email,project_id,user_id}=route.params
-  const [loader,setloader]=useState(false)
-  const [Task,SetTask]=useState("")
-  console.log("This is Status"+status);
-  console.log("This is Owner:"+owner_email);
-  console.log("This is Project Id:"+project_id);
-  console.log("This user place the bid:"+user_id);
-  let navigation=useNavigation();
-  const [Jobs,SetJobs]=useState("")
+  let route = useRoute()
+  const { status, owner_email, project_id, user_id } = route.params
+  const [loader, setloader] = useState(false)
+  const [Task, SetTask] = useState("")
+  console.log("This is Status" + status);
+  console.log("This is Owner:" + owner_email);
+  console.log("This is Project Id:" + project_id);
+  console.log("This user place the bid:" + user_id);
+  let navigation = useNavigation();
+  const [Jobs, SetJobs] = useState("")
   const collectionRef = collection(firestore, 'tasklist');
   const BidUploaded = () => {
     setloader(true)
@@ -38,8 +38,8 @@ function Tasklist() {
         temp.push(data.data())
       })
       SetJobs(temp)
-    //   settempJobs(temp)
-    setloader(false)
+      //   settempJobs(temp)
+      setloader(false)
 
     }).catch(() => {
       setloader(false)
@@ -54,159 +54,161 @@ function Tasklist() {
     const userdocumentref = doc(collectionRef, document_id)
 
     const Data = {
-        "doc_id": document_id,
-        "project_id": project_id,
-        "user_id": user_id,
-        "project_owner_email": owner_email,
-        "task":Task,
-        "task_status":"pending"
+      "doc_id": document_id,
+      "project_id": project_id,
+      "user_id": user_id,
+      "project_owner_email": owner_email,
+      "task": Task,
+      "task_status": "pending"
     }
     setloader(true)
-    setDoc(userdocumentref,Data).then(()=>{
-        Alert.alert("Post Success","Task Are Uploaded")
-        setloader(false)
-        navigation.goBack();
-    }).catch(()=>{
-        setloader(false)
-        Alert.alert("Opps","Something went wrong")
+    setDoc(userdocumentref, Data).then(() => {
+      Alert.alert("Post Success", "Task Are Uploaded")
+      setloader(false)
+      navigation.goBack();
+    }).catch(() => {
+      setloader(false)
+      Alert.alert("Opps", "Something went wrong")
 
     })
 
 
-}
-useEffect(()=>{
-    navigation.addListener("focus",()=>{
+  }
+  useEffect(() => {
+    navigation.addListener("focus", () => {
 
-        BidUploaded()
+      BidUploaded()
     })
-},[])
+  }, [])
 
   return (
     <View
-    style={{
-      flex: 1,
-    // alignItems:"center",
-      backgroundColor: "white",
-    }}
-  >
-   <View
-          style={{
-            width: "95%",
-            height: 30,
-            marginLeft:5
-          }}
-        >
-                    
-      
-          <TouchableOpacity onPress={() => navigation.goBack()}>
-            <Entypo name="chevron-thin-left" size={30} />
-          </TouchableOpacity>
-          </View>
-     
-    <Text
-    style=
-    {{
-      fontSize:20,
-      fontWeight:"bold",
-      alignSelf:"center",
-      color:"#000000"
-    }}
+      style={{
+        flex: 1,
+        // alignItems:"center",
+        backgroundColor: "white",
+      }}
     >
+      <View
+        style={{
+          width: "95%",
+          height: 30,
+          marginLeft: 5
+        }}
+      >
 
-Tasklist
-    </Text> 
 
+        <TouchableOpacity onPress={() => navigation.goBack()}>
+          <Entypo name="chevron-thin-left" size={30} />
+        </TouchableOpacity>
+      </View>
 
-    <FormInput
-                    // style={styles.input}
-                    onChangeText={(PostProject) => SetTask(PostProject)}
-                    // value={text}
-                    labelValue={Task}
-                    // secureTextEntry={true}
-                    // keyboardType="email-address"
-                    placeholder="Write Task"
-                    autoCapitalize="none"
-                    autocorrect={false}
-                />
-    <View
+      <Text
+        style=
+        {{
+          fontSize: 20,
+          fontWeight: "bold",
+          alignSelf: "center",
+          color: "#000000"
+        }}
+      >
+
+        Tasklist
+      </Text>
+
+      {
+        status ?
+          <FormInput
+            // style={styles.input}
+            onChangeText={(PostProject) => SetTask(PostProject)}
+            // value={text}
+            labelValue={Task}
+            // secureTextEntry={true}
+            // keyboardType="email-address"
+            placeholder="Write Task"
+            autoCapitalize="none"
+            autocorrect={false}
+          />
+          : null}
+      <View
         style={{
           width: '90%',
           alignSelf: 'center',
-        marginBottom:10,
-        height:"80%"
+          marginBottom: 10,
+          height: "80%"
         }}>
         <FlatList
           data={Jobs}
           keyExtractor={(item, index) => index.toString()}
           showsVerticalScrollIndicator={false}
-          renderItem={({item}) => (
+          renderItem={({ item }) => (
             <>
-            <TouchableOpacity
-            onPress={() => navigation.navigate("TaskDetail",{
-                Tasktitle:item.task,
-                Task_id:item.doc_id
-            })}
-            
-            >
+              <TouchableOpacity
+                onPress={() => navigation.navigate("TaskDetail", {
+                  Tasktitle: item.task,
+                  Task_id: item.doc_id
+                })}
 
-            <View
-              style={{
-                width: '100%',
-        marginBottom:10
-             ,
-                backgroundColor: '#F1F1F1',
-                borderRadius: 10,
-                marginTop: 10,
-                padding:20,
-              
-               
-         
-              }}>
-            
-                <Text
+              >
+
+                <View
                   style={{
-                    fontSize: 17,
-                    color: '#000000',
-                    // fontWeight: 'bold',
-                  }}>
-                  {item.task}
-                </Text>
-              
-                
-                
-                 
-            
-            </View>
-            </TouchableOpacity>
-            <View  style={{left:10}}>
-                 <Text>Task Status:{item.task_status}</Text>
+                    width: '100%',
+                    marginBottom: 10
+                    ,
+                    backgroundColor: '#F1F1F1',
+                    borderRadius: 10,
+                    marginTop: 10,
+                    padding: 20,
 
-            </View>
-            {/* <Text></Text> */}
+
+
+                  }}>
+
+                  <Text
+                    style={{
+                      fontSize: 17,
+                      color: '#000000',
+                      // fontWeight: 'bold',
+                    }}>
+                    {item.task}
+                  </Text>
+
+
+
+
+
+                </View>
+              </TouchableOpacity>
+              <View style={{ left: 10 }}>
+                <Text>Task Status:{item.task_status}</Text>
+
+              </View>
+              {/* <Text></Text> */}
             </>
 
           )}
         />
-{status?
+        {status ?
 
 
 
-        <TouchableOpacity style={{height:50,alignItems:"center"}}
-        
-        onPress={UploadPost}
-        >
-     
-        <LoginBtn
-            color="#003399"
-            textcolor="#fff"
-            textfontsize={23}
-            name="Add Task"
+          <TouchableOpacity style={{ height: 50, alignItems: "center" }}
+
+            onPress={UploadPost}
+          >
+
+            <LoginBtn
+              color="#003399"
+              textcolor="#fff"
+              textfontsize={23}
+              name="Add Task"
             />
-         
-          </TouchableOpacity>:null
 
-}
-          <View  style={{height:40}} />
+          </TouchableOpacity> : null
+
+        }
+        <View style={{ height: 40 }} />
       </View>
 
 
@@ -218,23 +220,23 @@ Tasklist
           alignItems: 'center',
           paddingVertical: 10,
           // postion:"absoulte",
-          width:"100%",
-          position:"absolute",
-          bottom: 0, 
+          width: "100%",
+          position: "absolute",
+          bottom: 0,
           backgroundColor: '#ffffff', // Customize tab bar background color
         }}
       >
-        <TouchableOpacity 
-        
-        onPress={() => navigation.navigate('Tasklist',{
-            status:  status,
-            owner_email:owner_email,
-            project_id:project_id,
-            user_id:user_id
-        
+        <TouchableOpacity
+
+          onPress={() => navigation.navigate('Tasklist', {
+            status: status,
+            owner_email: owner_email,
+            project_id: project_id,
+            user_id: user_id
+
           })}
-        
-        style={{ alignItems: 'center' }}>
+
+          style={{ alignItems: 'center' }}>
           <Ionicons
             name={focusedTab === 'Dashboard' ? 'ios-list' : 'ios-list'}
             size={24}
@@ -243,21 +245,21 @@ Tasklist
           <Text style={{ color: focusedTab === 'Dashboard' ? '#000000' : '#000000' }}>Tasklist</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity 
-//         onPress={() =>{
+        <TouchableOpacity
+          //         onPress={() =>{
 
-// // navigation.navigate("Chat")
+          // // navigation.navigate("Chat")
 
-//       }} 
-onPress={() => navigation.navigate('Chat',{
-    status:  status,
-    owner_email:owner_email,
-    project_id:project_id,
-    user_id:user_id
+          //       }} 
+          onPress={() => navigation.navigate('Chat', {
+            status: status,
+            owner_email: owner_email,
+            project_id: project_id,
+            user_id: user_id
 
-  })}
-      
-      style={{ alignItems: 'center' }}>
+          })}
+
+          style={{ alignItems: 'center' }}>
           <Ionicons
             name={focusedTab === 'BuyerChat' ? 'chatbubble' : 'chatbubble'}
             size={24}
@@ -266,28 +268,28 @@ onPress={() => navigation.navigate('Chat',{
           <Text style={{ color: focusedTab === 'BuyerChat' ? '#000000' : '#000000' }}>Chat</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity 
-      onPress={() => navigation.navigate('FileUpload',{
-        status:  status,
-        owner_email:owner_email,
-        project_id:project_id,
-        user_id:user_id
-    
-      })}
-      
-      
-      style={{ alignItems: 'center' }}>
+        <TouchableOpacity
+          onPress={() => navigation.navigate('FileUpload', {
+            status: status,
+            owner_email: owner_email,
+            project_id: project_id,
+            user_id: user_id
+
+          })}
+
+
+          style={{ alignItems: 'center' }}>
           <MaterialCommunityIcons
             name={focusedTab === 'FileUpload' ? 'file-upload' : 'file-upload'}
             size={24}
             color={focusedTab === 'FileUpload' ? '#000000' : '#000000'}
           />
-          <Text style={{ color: focusedTab === 'FileUpload' ? '#000000' : '#000000' }}>File Upload</Text>
+          <Text style={{ color: focusedTab === 'FileUpload' ? '#000000' : '#000000' }}>Files</Text>
         </TouchableOpacity>
       </View>
-      <Modal  visible={loader}   transparent>
-        <View  style={{flex:1,justifyContent:"center",alignItems:"center"}}>
-<ActivityIndicator  size={"large"}  color={"black"} />
+      <Modal visible={loader} transparent>
+        <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+          <ActivityIndicator size={"large"} color={"black"} />
         </View>
 
       </Modal>

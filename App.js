@@ -189,7 +189,9 @@ function App() {
            
            name="UserChat"
            component={UserChat}
-         options={({ route }) => ({ title: route.params.username })}
+         options={{
+          headerShown:false
+         }}
          />
         </Stack.Navigator>
       </NavigationContainer>

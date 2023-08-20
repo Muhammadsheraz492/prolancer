@@ -107,6 +107,8 @@ export default function JobDetail() {
                     <Text style={styles.dashboardButtonText}>Apply</Text>
 
                 </TouchableOpacity>
+
+                
             </View>
             <Modal visible={loader} transparent>
                 <View style={{ flex: 1, justifyContent: "center", alignItems: "center", justifyContent: "center" }}>

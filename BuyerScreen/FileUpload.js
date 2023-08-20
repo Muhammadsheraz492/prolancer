@@ -301,7 +301,7 @@ onPress={()=>Linking.openURL(item.file_link)}
                         size={24}
                         color={focusedTab === 'FileUpload' ? '#000000' : '#000000'}
                     />
-                    <Text style={{ color: focusedTab === 'FileUpload' ? '#000000' : '#000000' }}>File Upload</Text>
+                    <Text style={{ color: focusedTab === 'FileUpload' ? '#000000' : '#000000' }}>Files</Text>
                 </TouchableOpacity>
             </View>
 
