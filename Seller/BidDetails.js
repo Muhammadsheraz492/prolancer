@@ -5,7 +5,7 @@ import Entypo from 'react-native-vector-icons/Entypo';
 import { firestore } from '../firebase/firebase';
 import axios from 'axios';
 export default function  SellerDetail({ route, navigation }) {
-    const { Skill, Bid, project_id, user_id,bid_id,status } = route.params;
+    const { Skill, Bid, project_id, user_id,bid_id,status ,item} = route.params;
     const [selectedStatus, setSelectedStatus] = useState(null);
     const [Username, setUsername] = useState("")
     const [JobDetail, setJobDetail] = useState("")
@@ -178,7 +178,15 @@ export default function  SellerDetail({ route, navigation }) {
                 {DashboardCheck === 'active' && (
                     <TouchableOpacity
                         style={styles.dashboardButton}
-                        onPress={() => navigation.navigate('Tasklist')}
+                        // onPress={() => navigation.navigate('Tasklist')}
+                        onPress={() => navigation.navigate('Tasklist',{
+                            status:false,
+                            owner_email:item.project_owner_email,
+                            project_id:item.project_id,
+                            user_id:user_id
+  
+  
+                          })}
                     >
                         <Text style={styles.dashboardButtonText}>Dashboard</Text>
                     </TouchableOpacity>

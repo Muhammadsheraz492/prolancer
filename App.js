@@ -28,7 +28,12 @@ import FileUpload from "./BuyerScreen/FileUpload";
 import Chat from "./BuyerScreen/Chat";
 import SellerDetail from "./Seller/BidDetails";
 import TaskDetail from "./BuyerScreen/TaskDetails";
-
+import Learning_Skill from "./Learning_Skill/Learning_skill";
+import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
+import DeviceNotificatin from "./BuyerScreen/Notification";
+import FQ from "./BuyerScreen/FQ";
+import Support from "./BuyerScreen/Support";
+import UserChat from "./BuyerScreen/UserChat";
 
 // console.log('Project ID:', projectId);
 Notifications.setNotificationHandler({
@@ -152,6 +157,40 @@ function App() {
             name="TaskDetail"
             component={TaskDetail}
           />
+             <Stack.Screen
+            options={{
+              headerShown: false,
+            }}
+            name="Learning"
+            component={Learning_Skill}
+          />
+             <Stack.Screen
+            options={{
+              headerShown: false,
+            }}
+            name="Notifications"
+            component={DeviceNotificatin}
+          />
+                 <Stack.Screen
+            options={{
+              headerShown: false,
+            }}
+            name="FQ"
+            component={FQ}
+          />
+                    <Stack.Screen
+            options={{
+              headerShown: false,
+            }}
+            name="Support"
+            component={Support}
+          />
+              <Stack.Screen
+           
+           name="UserChat"
+           component={UserChat}
+         options={({ route }) => ({ title: route.params.username })}
+         />
         </Stack.Navigator>
       </NavigationContainer>
     </SafeAreaView>
@@ -163,18 +202,64 @@ function App() {
 const TabNavi = () => {
   return (
     <Tab.Navigator
-    screenOptions={{headerShown: false}}
-    initialRouteName="JobList"
+      screenOptions={{ headerShown: false }}
+      initialRouteName="JobList"
     >
-      <Tab.Screen name="JobList" component={JobList} />
-      <Tab.Screen name="Purposal" component={Purposal} />
-      <Tab.Screen name="BuyerChat" component={BuyerChat} />
-      <Tab.Screen name="More" component={More} />
-     
+      <Tab.Screen
+        name="JobList"
+        component={JobList}
+        options={{
+          tabBarIcon: ({ focused, color, size }) => (
+            <Ionicons
+              name={focused ? 'search' : 'search-outline'}
+              size={size}
+              color={color}
+            />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="Purposal"
+        component={Purposal}
+        options={{
+          tabBarIcon: ({ focused, color, size }) => (
+            <Ionicons
+              name={focused ? 'ios-paper-plane' : 'ios-paper-plane-outline'}
+              size={size}
+              color={color}
+            />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="BuyerChat"
+        component={BuyerChat}
+        options={{
+          tabBarIcon: ({ focused, color, size }) => (
+            <MaterialCommunityIcons
+              name={focused ? 'chat' : 'chat-outline'}
+              size={size}
+              color={color}
+            />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="More"
+        component={More}
+        options={{
+          tabBarIcon: ({ focused, color, size }) => (
+            <Ionicons
+              name={focused ? 'list' : 'list-outline'}
+              size={size}
+              color={color}
+            />
+          ),
+        }}
+      />
     </Tab.Navigator>
   );
 };
-
 
 
 export default App;

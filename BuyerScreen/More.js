@@ -123,6 +123,7 @@ export default function More({navigation}) {
           <TouchableOpacity
             onPress={() => {
               // openSMSApp();
+              navigation.navigate("Learning");
             }}>
             <View
               style={{

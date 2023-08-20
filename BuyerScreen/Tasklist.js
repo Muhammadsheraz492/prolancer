@@ -187,6 +187,10 @@ Tasklist
 
           )}
         />
+{status?
+
+
+
         <TouchableOpacity style={{height:50,alignItems:"center"}}
         
         onPress={UploadPost}
@@ -199,7 +203,9 @@ Tasklist
             name="Add Task"
             />
          
-          </TouchableOpacity>
+          </TouchableOpacity>:null
+
+}
           <View  style={{height:40}} />
       </View>
 

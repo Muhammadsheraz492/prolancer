@@ -148,10 +148,22 @@ export default function Purposal() {
                   project_id: item.project_id,
                   user_id: item.user_id,
                   bid_id: item.bid_id,
-                  status: item.purposal_status
+                  status: item.purposal_status,
+                  item:item
 
                 })}
+                // onPress={() => navigation.navigate("BidDetail", {
 
+                //   JobDetail: item.JobDetail,
+                //   Username: item.Username,
+                //   Skill: item.Skills,
+                //   Bid:item.bid,
+                //   project_id:item.project_id,
+                //   user_id:item.user_id,
+                //   bid_id:item.bid_id,
+                //   status:item.purposal_status
+  
+                // })}
 
               >
 

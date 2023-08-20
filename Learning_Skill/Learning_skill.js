@@ -68,10 +68,7 @@ export default function Learning_Skill() {
 
       </View>
 
-      {loader ? <View style={{ flex: 1, justifyContent: "center" }}>
-
-        <ActivityIndicator size={"large"} color={"black"} />
-      </View> :Skill_Videos.length<=0 ?
+      {Skill_Videos.length<=0 ?
       
       
       <View  style={{flex:1,justifyContent:"center"}}>
@@ -84,7 +81,7 @@ export default function Learning_Skill() {
           source={{ uri: e }}
           style={{ width: 300, height: 200 }}
           useNativeControls // Enable Expo's built-in video controls
-          resizeMode="contain" // Adjust the video's aspect ratio to fit the player
+          // resizeMode="contain" // Adjust the video's aspect ratio to fit the player
         />
       ))
 

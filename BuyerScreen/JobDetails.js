@@ -14,7 +14,7 @@ export default function JobDetail() {
     const collectionRef = collection(firestore, 'Bids');
     const [loader, setloader] = useState(false)
     let user_id = useSelector((state) => state.counter.user_id)
-
+//   console.log(project_email);
     const [proposalText, setProposalText] = useState('');
     const Post = () => {
         const document_id = doc_id()
