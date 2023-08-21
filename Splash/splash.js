@@ -5,7 +5,7 @@ import { useNavigation } from '@react-navigation/native';
 export default function Splash() {
     let navigation=useNavigation()
     setTimeout(() => {
-        navigation.navigate("LoginScreen")
+        navigation.navigate("Swipers")
     }, 3000);
   return (
     <View  style={{flex:1,alignItems:"center",justifyContent:"center"}}>

@@ -11,9 +11,13 @@ export default function Learning_Skill() {
     "https://firebasestorage.googleapis.com/v0/b/prolancer-403a6.appspot.com/o/videos%2F%230%20Level%202%20React%20Intro.mp4?alt=media&token=bd7f2e6a-5576-41cf-b544-418da6804da2",
   ]
   const Flutter_Data = [
-    "https://firebasestorage.googleapis.com/v0/b/prolancer-403a6.appspot.com/o/videos%2FWhat%20Is%20Flutter%20_%20Introduction%20To%20Flutter%20_%20Flutter%20_%20Intellipaat.mp4?alt=media&token=27956a13-1949-4943-ac91-452d99ac1d68",
-    "https://firebasestorage.googleapis.com/v0/b/prolancer-403a6.appspot.com/o/videos%2FWhat%20Is%20Flutter%20_%20Introduction%20To%20Flutter%20_%20Flutter%20_%20Intellipaat.mp4?alt=media&token=27956a13-1949-4943-ac91-452d99ac1d68",
-    "https://firebasestorage.googleapis.com/v0/b/prolancer-403a6.appspot.com/o/videos%2FWhat%20Is%20Flutter%20_%20Introduction%20To%20Flutter%20_%20Flutter%20_%20Intellipaat.mp4?alt=media&token=27956a13-1949-4943-ac91-452d99ac1d68",
+    "https://firebasestorage.googleapis.com/v0/b/prolancer-403a6.appspot.com/o/Uploader%2FWhatsApp%20Video%202023-08-21%20at%205.47.52%20AM%20(1).mp4?alt=media&token=515a56cb-2bc8-417a-bb4b-b34a6687cc9a"
+  //  "https://firebasestorage.googleapis.com/v0/b/prolancer-403a6.appspot.com/o/Uploader%2FCyber%20Security%20-%20Video%20Animation%20Services.mp4?alt=media&token=de3ecdfc-51c9-4c98-a23b-3cae1e6d9754"
+   
+   
+    // "https://firebasestorage.googleapis.com/v0/b/prolancer-403a6.appspot.com/o/videos%2FWhat%20Is%20Flutter%20_%20Introduction%20To%20Flutter%20_%20Flutter%20_%20Intellipaat.mp4?alt=media&token=27956a13-1949-4943-ac91-452d99ac1d68",
+    // "https://firebasestorage.googleapis.com/v0/b/prolancer-403a6.appspot.com/o/videos%2FWhat%20Is%20Flutter%20_%20Introduction%20To%20Flutter%20_%20Flutter%20_%20Intellipaat.mp4?alt=media&token=27956a13-1949-4943-ac91-452d99ac1d68",
+    // "https://firebasestorage.googleapis.com/v0/b/prolancer-403a6.appspot.com/o/videos%2FWhat%20Is%20Flutter%20_%20Introduction%20To%20Flutter%20_%20Flutter%20_%20Intellipaat.mp4?alt=media&token=27956a13-1949-4943-ac91-452d99ac1d68",
   ]
   const Mobile_Data = [
     "https://firebasestorage.googleapis.com/v0/b/prolancer-403a6.appspot.com/o/videos%2FBuild%20Apps%20With%20XDK%20and%20Parse_%20Introduction.mp4?alt=media&token=fd38a4bb-493b-4bfd-afa3-7236c50287e7",
@@ -21,7 +25,9 @@ export default function Learning_Skill() {
     "https://firebasestorage.googleapis.com/v0/b/prolancer-403a6.appspot.com/o/videos%2FBuild%20Apps%20With%20XDK%20and%20Parse_%20Introduction.mp4?alt=media&token=fd38a4bb-493b-4bfd-afa3-7236c50287e7",
   ]
   const Cyber_Seacurity = [
-    "https://firebasestorage.googleapis.com/v0/b/prolancer-403a6.appspot.com/o/videos%2FCyber%20Security%20-%20Video%20Animation%20Services.mp4?alt=media&token=80bb1610-c5fb-4b36-8652-51544747734d",
+  "https://firebasestorage.googleapis.com/v0/b/prolancer-403a6.appspot.com/o/Uploader%2FCyber%20Security%20-%20Video%20Animation%20Services.mp4?alt=media&token=de3ecdfc-51c9-4c98-a23b-3cae1e6d9754"
+  ,
+    // "https://firebasestorage.googleapis.com/v0/b/prolancer-403a6.appspot.com/o/videos%2FCyber%20Security%20-%20Video%20Animation%20Services.mp4?alt=media&token=80bb1610-c5fb-4b36-8652-51544747734d",
     "https://firebasestorage.googleapis.com/v0/b/prolancer-403a6.appspot.com/o/videos%2FCyber%20Security%20-%20Video%20Animation%20Services.mp4?alt=media&token=80bb1610-c5fb-4b36-8652-51544747734d",
     "https://firebasestorage.googleapis.com/v0/b/prolancer-403a6.appspot.com/o/videos%2FCyber%20Security%20-%20Video%20Animation%20Services.mp4?alt=media&token=80bb1610-c5fb-4b36-8652-51544747734d",
   ]
@@ -75,11 +81,13 @@ export default function Learning_Skill() {
       <Text>Please Select Skill from </Text>
       
         </View>
-        :Skill_Videos.map((e) => (
+        :
+        Skill_Videos.map((e) => (
 
         <Video
+        
           source={{ uri: e }}
-          style={{ width: 300, height: 200 }}
+          style={{ width: 300, height: 200,marginTop:20 }}
           useNativeControls // Enable Expo's built-in video controls
           // resizeMode="contain" // Adjust the video's aspect ratio to fit the player
         />

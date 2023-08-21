@@ -36,6 +36,7 @@ import Support from "./BuyerScreen/Support";
 import UserChat from "./BuyerScreen/UserChat";
 import splash from "./Splash/splash";
 import Splash from "./Splash/splash";
+import Swipers from "./Component/Swipers";
 
 // console.log('Project ID:', projectId);
 Notifications.setNotificationHandler({
@@ -73,6 +74,14 @@ function App() {
             name="splash"
             component={Splash}
           />
+           <Stack.Screen
+            options={{
+              headerShown: false,
+            }}
+            name="Swipers"
+            component={Swipers}
+          />
+          
           <Stack.Screen
             options={{
               headerShown: false,
