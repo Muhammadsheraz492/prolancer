@@ -35,52 +35,72 @@ const LoginScreen = ({ navigation }) => {
       SetDevice_token(val);
     })
   }, []);
-const Signin=()=>{
-  setloader(true)
-  const usersRef = collection(firestore, 'user');
-const q = query(usersRef, where('user_email', '==', username));
-console.log("Errj");
-const Data={
-  device_token:Device_token
-  
-}
-signInWithEmailAndPassword(auth,username,password).then(()=>{
-  console.log("Singined");
-  getDocs(q)
-  .then((querySnapshot) => {
-    querySnapshot.forEach((doc1) => {
-      console.log('Document ID:', doc1.id);
-      const documentRef = doc(firestore, 'user', doc1.id);
-        // console.log();
-        dispatch(changeuserusername(doc1.data()['user_name']))
-         dispatch(changeemail(username))
-         dispatch(changeuserid(doc1.id))
-        // console.log('Document data:', doc.data());
-        updateDoc(documentRef, Data)
-        .then(() => {
-          console.log('Document updated successfully.');
-          setloader(false)
-          navigation.replace("Tab");
-        })
-        .catch((error) => {
-          console.error('Error updating document:', error);
-          setloader(false);
+  const handleSignIn = () => {
+    if (!validateInputs()) {
+      return;
+    }
 
-        });
-       
+    setloader(true);
+    const usersRef = collection(firestore, 'user');
+    const q = query(usersRef, where('user_email', '==', username));
+    // console.log("Errj");
+    const Data={
+      device_token:Device_token
       
+    }
+
+    signInWithEmailAndPassword(auth, username, password)
+      .then(() => {
+        getDocs(q)
+          .then((querySnapshot) => {
+            querySnapshot.forEach((doc1) => {
+              const documentRef = doc(firestore, 'user', doc1.id);
+              dispatch(changeuserusername(doc1.data()['user_name']));
+              dispatch(changeemail(username));
+              dispatch(changeuserid(doc1.id));
+              updateDoc(documentRef, Data)
+                .then(() => {
+                  setloader(false);
+                  navigation.replace('Tab');
+                })
+                .catch((error) => {
+                  console.error('Error updating document:', error);
+            showAlert('Error fetching user data:'+error )
+
+                  setloader(false);
+                });
+            });
+          })
+          .catch((err) => {
+            console.error('Error fetching user data:', err);
+            showAlert('Error fetching user data:'+err )
+            setloader(false);
+          });
       })
-    }).catch((err)=>{
-      console.log(err);
-      setloader(false)
+      .catch((err) => {
+        setloader(false);
+        // console.error('Sign-in error:', err);
+        showAlert('Error fetching user data:'+err )
 
-    })
-  }).catch((err)=>{
-    setloader(false);
+      });
+  };
 
-   console.log(err);
-  })
-}
+  const validateInputs = () => {
+    if (!username || !password) {
+      showAlert('Please provide both email and password');
+      return false;
+    }
+
+    // Add more validation if needed
+
+    return true;
+  };
+
+  const showAlert = (message) => {
+    // Implement your alert logic here
+    alert(message);
+  };
+
 
   return (
     <View
@@ -197,7 +217,7 @@ signInWithEmailAndPassword(auth,username,password).then(()=>{
           }}
           onPress={() => {
         
-            Signin();
+            handleSignIn();
           }}
         >
           <LoginBtn

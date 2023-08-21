@@ -34,6 +34,8 @@ import DeviceNotificatin from "./BuyerScreen/Notification";
 import FQ from "./BuyerScreen/FQ";
 import Support from "./BuyerScreen/Support";
 import UserChat from "./BuyerScreen/UserChat";
+import splash from "./Splash/splash";
+import Splash from "./Splash/splash";
 
 // console.log('Project ID:', projectId);
 Notifications.setNotificationHandler({
@@ -64,6 +66,13 @@ function App() {
     <SafeAreaView style={{ flex: 1 }}>
       <NavigationContainer>
         <Stack.Navigator>
+        <Stack.Screen
+            options={{
+              headerShown: false,
+            }}
+            name="splash"
+            component={Splash}
+          />
           <Stack.Screen
             options={{
               headerShown: false,
