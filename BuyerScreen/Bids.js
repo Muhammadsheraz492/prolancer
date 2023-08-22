@@ -28,6 +28,7 @@ export default function Bids() {
         });
 
         SetJobs(temparray);
+        console.log(temparray);
         setallData(temparray);
       })
       .catch((err) => {
@@ -89,13 +90,14 @@ export default function Bids() {
               onPress={() => navigation.navigate("BidDetail", {
 
                 JobDetail: item.JobDetail,
-                Username: item.Username,
+                Username: item.username,
                 Skill: item.Skills,
                 Bid:item.bid,
                 project_id:item.project_id,
                 user_id:item.user_id,
                 bid_id:item.bid_id,
-                status:item.purposal_status
+                status:item.purposal_status,
+                item:item
 
               })}
             >
@@ -130,7 +132,7 @@ export default function Bids() {
                     color: '#5B5B5B',
                     // fontWeight:"bold"
                   }}>
-                  {item.Username}
+                  {item.username}
                 </Text>
                 <Text
                   style={{

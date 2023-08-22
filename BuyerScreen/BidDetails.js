@@ -6,18 +6,22 @@ import { firestore } from '../firebase/firebase';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
 export default function BidDetail({ route, navigation }) {
-    const { Skill, Bid, project_id, user_id,bid_id,status } = route.params;
+    const { Skill, Bid, project_id, user_id,bid_id,status,item } = route.params;
     const [selectedStatus, setSelectedStatus] = useState(null);
     const [Username, setUsername] = useState("")
+    const [ToUsername, SetToUsername] = useState(item.username)
     const [JobDetail, setJobDetail] = useState("")
     const [loader,setloader]=useState(false)
     const [DashboardCheck,setDashboardCheck]=useState(status)
+    // const [myid,setmyid]=useState(item.user_id)
     // const [CheckLogedUser,setCheckLogedUser]=useSelector()
   let CheckLogedUser=useSelector((state)=>state.counter.useremail)
+  let myid=useSelector((state)=>state.counter.user_id)
 
     const [project_owner_email,SetProjectOwnerEmail]=useState("")
     console.log("This is Project Id", project_id);
     console.log("This is User Id", user_id);
+
 
     const handleButtonPress = (status) => {
         // if(status)==""
@@ -36,10 +40,31 @@ export default function BidDetail({ route, navigation }) {
                 SetProjectOwnerEmail(doc.data()["user_email"]);
                 setUsername(doc.data()["user_name"])
                 setJobDetail(doc.data()["description"])
+                // SetToUsername(item.username)
+                GetAllUser();
+                // console.log(item);
             })
             .catch((err) => {
                 console.log(err);
             });
+
+    }
+    const GetAllUser = () => {
+
+        getDocs(query(collection(firestore, 'user'), where('user_id', '==', user_id)))
+        .then((querySnapshot) => {
+            //   let temparray = [];
+            const doc = querySnapshot.docs[0];
+            //   SendNotification(doc.data()["device_token"],doc.data()["user_name"],"You'r Bid are Acepted");
+            // console.log(doc.data()[""]);
+            // setUsername(doc.data()["user_name"])
+            // setJobDetail(doc.data()["description"])
+            // AllocateProject2(doc.data()["device_token"],doc.data()["user_name"],"You'r Bid are Rejected")
+            SetToUsername(doc.data()["user_name"])
+        })
+        .catch((err) => {
+            console.log(err);
+        });
 
     }
     const SendNotification = (val, title, body) => {
@@ -208,6 +233,24 @@ export default function BidDetail({ route, navigation }) {
                 )}
 
               
+<TouchableOpacity 
+                          onPress={() => navigation.navigate('UserChat',{
+                            // status:  status,
+                            // owner_email:"admin@gmail",
+                            // project_id:project_id,
+                            user_id:myid,
+                            username:ToUsername,
+                            reciver_id:user_id
+
+                        
+                          })}
+                      
+                   
+                          
+                        
+                        style={{width:"90%",alignSelf:"center",height:50,backgroundColor:"#133264",borderRadius:15,alignItems:"center",justifyContent:"center"}}>
+                        <Text style={{textAlign:"center",fontSize:20,color:"#fff"}}>Chat</Text>
+                        </TouchableOpacity>
 
             </View>  
             <Modal  visible={loader}  transparent >
