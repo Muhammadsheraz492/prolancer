@@ -65,7 +65,7 @@ export default function StatusDetail({ route }) {
         <TouchableOpacity style={styles.dashboardButton} onPress={() => Update('In progress')}>
           <Text style={styles.dashboardButtonText}>In Progress</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.dashboardButton} onPress={() => Update('Don')}>
+        <TouchableOpacity style={styles.dashboardButton} onPress={() => Update('Done')}>
           <Text style={styles.dashboardButtonText}>Done</Text>
         </TouchableOpacity>
       </View>

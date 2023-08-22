@@ -98,7 +98,7 @@ function Chat() {
             querySnapshot.forEach((data) => {
                 console.log(data.id);
                 // console.log(data.data()["MilestonePercentage"]);
-                if (data.data()["Milestone_Status"] == "Don") {
+                if (data.data()["Milestone_Status"] == "Done") {
 
                     percentage = percentage + parseInt(data.data()["MilestonePercentage"])
                 }
