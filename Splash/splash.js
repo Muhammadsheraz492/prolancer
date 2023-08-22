@@ -13,3 +13,13 @@ export default function Splash() {
     </View>
   )
 }
+// import * as React from 'react';
+// import { ProgressBar, Colors } from 'react-native-paper';
+
+// const MyComponent = () => (
+//   <ProgressBar style={{marginTop: 300}}progress={1} color="#49B5F2"
+  
+//   />
+// );
+
+// export default MyComponent;
